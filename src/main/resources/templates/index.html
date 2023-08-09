@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page</title>
+</head>
+
+<body>
+
+    <h1>Hello World!</h1>
+
+    <br />
+
+    <ul>
+        <li>Home Page</li>
+        <li>Articles</li>
+        <li>Comments</li>
+        <li>Charts</li>
+        <li>Auth Page</li>
+    </ul>
+
+    <br />
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="userTest:${allusertestlist}">
+            <td th:text="${userTest.id}"></td>
+            <td th:text="${userTest.username}"></td>
+            <td th:text="${userTest.email}"></td>
+            <td th:text="${userTest.gender}"></td>
+            <td> <a th:href="@{/showFormForUpdate/{id}(id=${userTest.id})}"
+                    class="btn btn-primary">Update</a>
+                <a th:href="@{/deleteEmployee/{id}(id=${userTest.id})}"
+                   class="btn btn-danger">Delete</a>
+
+        </tr>
+        </tbody>
+<!--        <tr>-->
+<!--            <td>Apple</td>-->
+<!--            <td>Banane</td>-->
+<!--            <td>Wasermelon</td>-->
+<!--            <td>Apricot</td>-->
+<!--            <td>Strawberrys</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--            <td>Name</td>-->
+<!--            <td>Math</td>-->
+<!--            <td>Science</td>-->
+<!--            <td>John</td>-->
+<!--            <td>Mary</td>-->
+<!--        </tr>-->
+    </table>
+
+    <br />
+
+    <form action="/submit" method="post">
+        <label for="title">Title</label> <br />
+        <input type="text" id="title" name="title" /><br />
+
+        <label for="content">Content: </label><br />
+        <textarea id="content" name="content" rows="4" cols="50"></textarea><br />
+
+        <button type="submit">Submit post</button>
+    </form>
+
+</body>
+
+</html>

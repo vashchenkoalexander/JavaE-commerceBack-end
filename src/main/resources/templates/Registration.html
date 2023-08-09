@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+
+<body>
+
+    <h1>Registration Form</h1>
+
+    <form th:action="@{/save}" th:object="${userTest}" method="POST">
+
+        <input type="text" th:field="*{username}" placeholder="UserName"> <br>
+        <input type="text" th:field="*{email}" placeholder="User Email"> <br>
+        <input type="text" th:field="*{gender}" placeholder="User Gender"> <br>
+        <button type="submit">Save user</button>
+
+<!--        <label for="email">Email:</label><br>-->
+<!--        <input type="email" id="email" name="email" required><br><br>-->
+
+<!--        <label for="password">Password:</label><br>-->
+<!--        <input type="password" id="password" name="password" required><br><br>-->
+
+<!--        <label for="confirm-password">Confirm Password:</label><br>-->
+<!--        <input type="password" id="confirm-password" name="confirm-password" required><br><br>-->
+
+<!--        <label for="gender">Gender:</label><br>-->
+<!--        <input type="password" id="gender" name="confirm-password" required><br><br>-->
+
+<!--        <select id="gender" name="gender">-->
+<!--            <option value="male">Male</option>-->
+<!--            <option value="female">Female</option>-->
+<!--            <option value="other">Other</option>-->
+<!--        </select><br><br>-->
+
+
+    </form>
+
+</body>
+
+</html>
