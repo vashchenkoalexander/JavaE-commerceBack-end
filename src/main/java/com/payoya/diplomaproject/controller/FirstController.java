@@ -22,12 +22,6 @@ public class FirstController {
         this.userTestService = userTestService;
     }
 
-//    @GetMapping("home")
-//    public String homePage(@RequestParam(value = "name", defaultValue = "test") String name, Model model){
-//        model.addAttribute("welcome", "Hello " + name);
-//        return "home";
-//    }
-
     @GetMapping("greet")
     public String greetings(@RequestParam(value = "name", required = false, defaultValue = "first") String value, Model model){
 
