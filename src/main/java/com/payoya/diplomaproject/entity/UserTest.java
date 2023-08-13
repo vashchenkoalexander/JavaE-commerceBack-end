@@ -1,6 +1,9 @@
 package com.payoya.diplomaproject.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "user_test")
@@ -10,12 +13,18 @@ public class UserTest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Size(min=5, message = "username must be at least 5 characters long")
     @Column(name = "username")
     private String username;
 
+    @NotNull
+    @Size(min=7, message = "email must be at least 7 characters long")
     @Column(name = "email")
     private String email;
 
+    @NotNull
+    @Size(min = 2, message = "at least 2 chars")
     @Column(name = "gender")
     private String gender;
 

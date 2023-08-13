@@ -13,9 +13,27 @@
 
     <form th:action="@{/save}" th:object="${userTest}" method="POST">
 
-        <input type="text" th:field="*{username}" placeholder="UserName"> <br>
-        <input type="text" th:field="*{email}" placeholder="User Email"> <br>
-        <input type="text" th:field="*{gender}" placeholder="User Gender"> <br>
+        <label>
+            <input type="text" th:field="*{username}" placeholder="Username"/>
+        </label> <br>
+        <span class="validationError" th:if="${#fields.hasErrors('username')}"
+              th:errors="*{username}" style="color: red">username error</span>
+        <br>
+
+        <label>
+            <input type="text" th:field="*{email}" placeholder="User email"/>
+        </label> <br>
+        <span class="validationError" th:if="${#fields.hasErrors('email')}"
+              th:errors="*{email}" style="color: red">email error</span>
+        <br>
+
+        <label>
+            <input type="text" th:field="*{gender}" placeholder="User gender"/>
+        </label> <br>
+        <span class="validationError" th:if="${#fields.hasErrors('gender')}"
+              th:errors="*{gender}" style="color: red">gender error</span>
+        <br>
+
         <button type="submit">Save user</button>
 
 <!--        <label for="email">Email:</label><br>-->

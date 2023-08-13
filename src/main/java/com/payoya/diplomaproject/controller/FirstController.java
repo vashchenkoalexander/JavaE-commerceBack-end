@@ -2,8 +2,11 @@ package com.payoya.diplomaproject.controller;
 
 import com.payoya.diplomaproject.Service.UserTestService;
 import com.payoya.diplomaproject.entity.UserTest;
+import jakarta.validation.Valid;
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +48,11 @@ public class FirstController {
     }
 
     @PostMapping("save")
-    public String saveUserTest(@ModelAttribute("test_user") UserTest user){
+    public String saveUserTest(@Valid UserTest user, Errors errors){ //
+        if(errors.hasErrors()){
+            return "Registration";
+        }
+
         userTestService.save(user);
         return "redirect:/";
     }
