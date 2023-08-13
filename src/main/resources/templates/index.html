@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
     <br />
 
     <ul>
-        <li>Home Page</li>
+        <li><a th:href="@{/}">Home Page</a></li>
         <li>Articles</li>
         <li>Comments</li>
         <li>Charts</li>
@@ -23,7 +23,19 @@
 
     <br />
 
-    <table border="1">
+    <!--/*@thymesVar id="allusertestlist" type="java"*/-->
+    <ul th:each="userTest:${allusertestlist}">
+        <li th:text="${userTest.id}">Home Page</li>
+        <li th:text="${userTest.username}">Articles</li>
+        <li th:text="${userTest.email}">Comments</li>
+        <li th:text="${userTest.gender}">Charts</li>
+        <li>Auth Page</li>
+    </ul>
+
+    <br />
+
+
+    <table border="0">
         <thead>
         <tr>
             <th>Name</th>
