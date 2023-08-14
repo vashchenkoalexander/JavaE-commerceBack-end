@@ -53,9 +53,9 @@ public class FirstController {
         return "redirect:/";
     }
 
-    @GetMapping("UpdatePage{id}")
+    @GetMapping("UpdatePage/{id}")
     public String getUpdatePage(@PathVariable Long id, Model model){
-        model.addAttribute("updatebleUserTest", userTestService.findUserTest(id));
+        model.addAttribute("userTest", userTestService.findUserTest(id));
         return "UpdatePage";
     }
 
@@ -64,6 +64,7 @@ public class FirstController {
         if(errors.hasErrors()){
             return "UpdatePage";
         }
+        userTestService.save(user);
         return "redirect:/";
     }
 

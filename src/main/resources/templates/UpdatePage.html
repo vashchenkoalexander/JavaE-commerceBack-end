@@ -9,8 +9,9 @@
 <h1>Registration Form</h1>
 
 <form th:action="@{/update}" th:object="${userTest}" method="POST">
+    <input type="hidden" name="_method" value="PUT">
 
-    <input  type="text" th:field="*{id}" placeholder="id"  visibility="hidden" />
+    <input  type="hidden" th:field="*{id}" placeholder="id"  visibility="hidden" />
 
     <span></span>
 
