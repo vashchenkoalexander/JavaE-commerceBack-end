@@ -13,25 +13,17 @@
 
     <br />
 
-<!--    <ul>-->
-<!--        <li><a th:href="@{/}">Home Page</a></li>-->
-<!--        <li>Articles</li>-->
-<!--        <li>Comments</li>-->
-<!--        <li>Charts</li>-->
-<!--        <li> <a th:href="@{/reg}">Registration</a></li>-->
-<!--        <li><a>Auth</a></li>-->
-<!--    </ul>-->
+    <ul>
+        <li><a th:href="@{/homepage}">Home Page</a></li>
+        <li>Articles</li>
+        <li>Comments</li>
+        <li>Charts</li>
+        <li> <a th:href="@{/reg}">Registration</a></li>
+        <li><a>Auth</a></li>
+        <li> <a th:href="@{/greet}">Greeting page</a></li>
+    </ul>
 
     <br />
-
-    <!--/*@thymesVar id="allusertestlist" type="java"*/-->
-    <ul th:each="userTest:${allusertestlist}">
-        <li th:text="${userTest.id}">Home Page</li>
-        <li th:text="${userTest.username}">Articles</li>
-        <li th:text="${userTest.email}">Comments</li>
-        <li th:text="${userTest.gender}">Charts</li>
-        <li>Auth Page</li>
-    </ul>
 
     <br />
 
@@ -51,11 +43,10 @@
             <td th:text="${userTest.username}"></td>
             <td th:text="${userTest.email}"></td>
             <td th:text="${userTest.gender}"></td>
-            <td> <a th:href="@{/showFormForUpdate/{id}(id=${userTest.id})}"
-                    class="btn btn-primary">Update</a>
-                <a th:href="@{/deleteEmployee/{id}(id=${userTest.id})}"
-                   class="btn btn-danger">Delete</a>
-
+            <td>
+                <a th:href="@{/UpdatePage/{id}(id=${userTest.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/deleteEmployee/{id}(id=${userTest.id})}" class="btn btn-danger">Delete</a>
+            </td>
         </tr>
         </tbody>
 <!--        <tr>-->

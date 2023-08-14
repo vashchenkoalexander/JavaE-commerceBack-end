@@ -5,6 +5,7 @@ import com.payoya.diplomaproject.repository.IUserTestRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserTestService {
@@ -22,5 +23,9 @@ public class UserTestService {
 
     public UserTest save(UserTest user){
         return userTestRepository.save(user);
+    }
+
+    public Optional<UserTest> findUserTest(Long id) {
+        return userTestRepository.findById(id);
     }
 }

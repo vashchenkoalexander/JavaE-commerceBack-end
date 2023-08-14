@@ -7,10 +7,7 @@ import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -30,14 +27,14 @@ public class FirstController {
 
         model.addAttribute("count", "Count: " + atomicLong.getAndIncrement());
 
-        return "greetings";
+        return "side/greetings";
 
     }
 
-    @GetMapping("/")
+    @GetMapping("home")
     public String test(Model model){
         model.addAttribute("allusertestlist", userTestService.findAll());
-        return "index";
+        return "homepage";
     }
 
     @GetMapping("reg")
@@ -52,11 +49,25 @@ public class FirstController {
         if(errors.hasErrors()){
             return "Registration";
         }
-
         userTestService.save(user);
         return "redirect:/";
     }
 
+    @GetMapping("UpdatePage{id}")
+    public String getUpdatePage(@PathVariable Long id, Model model){
+        model.addAttribute("updatebleUserTest", userTestService.findUserTest(id));
+        return "UpdatePage";
+    }
+
+    @PutMapping("update")
+    public String updateUserTest(@Valid UserTest user, Errors errors){
+        if(errors.hasErrors()){
+            return "UpdatePage";
+        }
+        return "redirect:/";
+    }
+
+    //TODO form for update and delete pages and redirections with good interact
 
 
 

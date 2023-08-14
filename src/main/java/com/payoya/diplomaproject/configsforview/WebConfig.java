@@ -14,5 +14,6 @@ public class WebConfig implements WebMvcConfigurer {
          second name should choose from mappings from your controllers
          */
         registry.addRedirectViewController("hm", "/");
+        registry.addRedirectViewController("/", "home");
     }
 }
