@@ -1,4 +1,4 @@
-package com.payoya.diplomaproject.entity;
+package com.payoya.diplomaproject.mvc.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

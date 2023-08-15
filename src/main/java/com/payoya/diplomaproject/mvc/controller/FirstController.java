@@ -1,9 +1,8 @@
-package com.payoya.diplomaproject.controller;
+package com.payoya.diplomaproject.mvc.controller;
 
-import com.payoya.diplomaproject.Service.UserTestService;
-import com.payoya.diplomaproject.entity.UserTest;
+import com.payoya.diplomaproject.mvc.Service.UserTestService;
+import com.payoya.diplomaproject.mvc.entity.UserTest;
 import jakarta.validation.Valid;
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;

@@ -1,6 +1,6 @@
-package com.payoya.diplomaproject.repository;
+package com.payoya.diplomaproject.mvc.repository;
 
-import com.payoya.diplomaproject.entity.UserTest;
+import com.payoya.diplomaproject.mvc.entity.UserTest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IUserTestRepository extends JpaRepository<UserTest, Long> {

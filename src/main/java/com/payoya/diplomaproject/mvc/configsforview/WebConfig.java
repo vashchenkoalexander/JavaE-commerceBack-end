@@ -1,4 +1,4 @@
-package com.payoya.diplomaproject.configsforview;
+package com.payoya.diplomaproject.mvc.configsforview;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

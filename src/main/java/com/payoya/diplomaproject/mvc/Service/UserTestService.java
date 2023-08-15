@@ -1,7 +1,7 @@
-package com.payoya.diplomaproject.Service;
+package com.payoya.diplomaproject.mvc.Service;
 
-import com.payoya.diplomaproject.entity.UserTest;
-import com.payoya.diplomaproject.repository.IUserTestRepository;
+import com.payoya.diplomaproject.mvc.entity.UserTest;
+import com.payoya.diplomaproject.mvc.repository.IUserTestRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
