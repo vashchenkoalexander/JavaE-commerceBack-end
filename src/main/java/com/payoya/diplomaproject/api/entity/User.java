@@ -16,14 +16,12 @@ import java.util.Collections;
 @Table(name = "users")
 public class User implements UserDetails {
 
-    //TODO Implement interface UserDetails to this class
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "username is required")
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @NotNull(message = "password is required")
@@ -40,6 +38,7 @@ public class User implements UserDetails {
 
     @NotNull(message = "role is required")
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "role")
     private Role role;
 
     public void setId(Long id) {
@@ -85,6 +84,10 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return new ArrayList<>(Collections.singleton(role)); //IS THIS WORKING PROPER???!?!?!?
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getPassword(){

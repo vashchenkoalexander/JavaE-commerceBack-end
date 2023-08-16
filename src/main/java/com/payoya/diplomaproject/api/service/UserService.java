@@ -2,12 +2,15 @@ package com.payoya.diplomaproject.api.service;
 
 import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.repository.IUserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private IUserRepository userRepository;
 
@@ -47,6 +50,12 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-
-
+    /*
+    return a user by his username or else return UsernameNotFoundException exception
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findUserByUsername(username).orElseThrow(()
+                -> new UsernameNotFoundException("user now found with this username" + username));
+    }
 }

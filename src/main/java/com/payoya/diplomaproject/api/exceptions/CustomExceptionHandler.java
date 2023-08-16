@@ -37,6 +37,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         responseBody.put("errors", errors);
 
         return new ResponseEntity<>(responseBody, headers, status);
-
     }
+
+
+
 }
