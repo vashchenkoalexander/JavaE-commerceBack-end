@@ -1,13 +1,22 @@
 package com.payoya.diplomaproject.api.entity;
 
+import com.payoya.diplomaproject.api.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.boot.autoconfigure.web.WebProperties;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
+
+    //TODO Implement interface UserDetails to this class
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +38,10 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
+    @NotNull(message = "role is required")
+    @Enumerated(value = EnumType.STRING)
+    private Role role;
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -45,8 +58,33 @@ public class User {
         return this.username;
     }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
     public void setPassword(String password){
         this.password = password;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new ArrayList<>(Collections.singleton(role)); //IS THIS WORKING PROPER???!?!?!?
     }
 
     public String getPassword(){

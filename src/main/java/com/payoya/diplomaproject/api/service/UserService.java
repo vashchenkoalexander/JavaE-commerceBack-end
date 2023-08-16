@@ -28,17 +28,19 @@ public class UserService {
     }
 
     public User updateUserById(Long id, User user){
-        //if(userRepository.findById(id).isPresent()){
+        if(userRepository.findById(id).isPresent()){
             User userUpd = userRepository.findById(id).get();
 
             userUpd.setUsername(user.getUsername());
             userUpd.setPassword(user.getPassword());
             userUpd.setFirstName(user.getFirstName());
             userUpd.setLastName(user.getLastName());
+
             return userRepository.save(userUpd);
-//        } else {
-//            return createNewUser(user);
-//        }
+        }else {
+            return createNewUser(user);
+        }
+
     }
 
     public void deleteUserById(Long id){
