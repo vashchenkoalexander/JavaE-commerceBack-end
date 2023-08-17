@@ -1,13 +1,12 @@
 package com.payoya.diplomaproject.api.service;
 
 import com.payoya.diplomaproject.api.entity.User;
+import com.payoya.diplomaproject.api.exceptions.UsernameExistException;
 import com.payoya.diplomaproject.api.repository.IUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -18,7 +17,13 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public User createNewUser(User user){
+    //TODO create a check for uniq login
+    public User createNewUser (User user) throws RuntimeException {
+
+        if(userRepository.findUserByUsername(user.getUsername()).isPresent()){
+            throw new UsernameExistException("user with this login is exist: " + user.getUsername());
+        }
+
         return userRepository.save(user);
     }
 

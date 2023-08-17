@@ -2,9 +2,9 @@ package com.payoya.diplomaproject.api.entity;
 
 import com.payoya.diplomaproject.api.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.springframework.boot.autoconfigure.web.WebProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,11 +20,13 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "username is required")
+    @NotBlank(message = "username is required")
+    @Size(min = 2, message = "Username must be at least 2 chars")
     @Column(name = "username", unique = true)
     private String username;
 
-    @NotNull(message = "password is required")
+    @NotBlank(message = "password is required")
+    @Size(min = 2, message = "Password must be at least 2 chars")
     @Column(name = "password")
     private String password;
 
