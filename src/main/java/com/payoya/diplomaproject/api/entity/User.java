@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -42,6 +43,9 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private Role role;
+
+    @Column(name = "date_of_create")
+    private Date dateOfCreate;
 
     public void setId(Long id) {
         this.id = id;
@@ -110,5 +114,19 @@ public class User implements UserDetails {
 
     public String getLastName(){
         return this.lastName;
+    }
+
+    public Date getDateOfCreate(){
+        if(dateOfCreate == null){
+            dateOfCreate = new Date();
+            return dateOfCreate;
+        }
+        return dateOfCreate;
+    }
+
+    public void setDateOfCreate(){
+        if(dateOfCreate == null){
+            dateOfCreate = new Date();
+        }
     }
 }

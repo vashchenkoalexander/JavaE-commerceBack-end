@@ -51,6 +51,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
+
+    /*
+    handle exceptions from HttpMessageNotReadableException class for now, only in User.Role
+     */
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
                                                                   HttpHeaders headers,
@@ -67,6 +71,5 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(responseBody, headers, status);
     }
-
 
 }

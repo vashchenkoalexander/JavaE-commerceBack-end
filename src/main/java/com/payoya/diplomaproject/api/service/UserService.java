@@ -6,6 +6,7 @@ import com.payoya.diplomaproject.api.repository.IUserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,8 +14,11 @@ public class UserService implements UserDetailsService {
 
     private IUserRepository userRepository;
 
-    public UserService(IUserRepository userRepository) {
+    private PasswordEncoder passwordEncoder;
+
+    public UserService(IUserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     //TODO create a check for uniq login
@@ -24,6 +28,10 @@ public class UserService implements UserDetailsService {
             throw new UsernameExistException("user with this login is exist: " + user.getUsername());
         }
 
+        if(user.getDateOfCreate() == null){
+            user.setDateOfCreate();
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
