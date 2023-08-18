@@ -1,5 +1,7 @@
 package com.payoya.diplomaproject.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.payoya.diplomaproject.api.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -8,10 +10,7 @@ import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -46,6 +45,10 @@ public class User implements UserDetails {
 
     @Column(name = "date_of_create")
     private Date dateOfCreate;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Post> postsList;
 
     public void setId(Long id) {
         this.id = id;
@@ -92,6 +95,10 @@ public class User implements UserDetails {
         return new ArrayList<>(Collections.singleton(role)); //IS THIS WORKING PROPER???!?!?!?
     }
 
+    public Role getRole() {
+        return role;
+    }
+
     public void setRole(Role role) {
         this.role = role;
     }
@@ -129,4 +136,13 @@ public class User implements UserDetails {
             dateOfCreate = new Date();
         }
     }
+
+    public List<Post> getPostsList(){
+        return this.postsList;
+    }
+
+    public void setPostsList(List<Post> posts){
+     this.postsList = posts;
+    }
+
 }

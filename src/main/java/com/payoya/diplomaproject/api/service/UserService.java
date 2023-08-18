@@ -21,7 +21,6 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    //TODO create a check for uniq login
     public User createNewUser (User user) throws RuntimeException {
 
         if(userRepository.findUserByUsername(user.getUsername()).isPresent()){
