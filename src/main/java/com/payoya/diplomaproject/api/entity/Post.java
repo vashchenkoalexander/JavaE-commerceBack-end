@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "posts")
@@ -23,7 +24,7 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-
+    @NotNull(message = "user is required")
     @JsonBackReference
     private User user;
 
@@ -54,6 +55,10 @@ public class Post {
 
     public void setUser(User user){
         this.user = user;
+    }
+
+    public Long getUserIdBelongsToPost(){
+        return this.user.getId();
     }
 
 }

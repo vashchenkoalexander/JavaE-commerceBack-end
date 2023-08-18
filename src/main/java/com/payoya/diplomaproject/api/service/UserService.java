@@ -70,4 +70,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserByUsername(username).orElseThrow(()
                 -> new UsernameNotFoundException("user now found with this username" + username));
     }
+
+    //TODO : create a mail sender for successfully creation of user and maybe create a JMS for working with asynchronous code
 }

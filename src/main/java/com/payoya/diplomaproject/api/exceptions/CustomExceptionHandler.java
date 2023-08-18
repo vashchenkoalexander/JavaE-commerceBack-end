@@ -1,7 +1,9 @@
 package com.payoya.diplomaproject.api.exceptions;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -60,16 +62,37 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   HttpHeaders headers,
                                                                   HttpStatusCode status,
                                                                   WebRequest request) {
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("timestamp", new Date());
+        responseBody.put("status", status.value());
+        String errors = ex.getMessage();
+        responseBody.put("error", errors);
+        return new ResponseEntity<>(responseBody, headers, status);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotWritable(HttpMessageNotWritableException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatusCode status,
+                                                                  WebRequest request) {
 
         Map<String, Object> responseBody = new LinkedHashMap<>();
         responseBody.put("timestamp", new Date());
         responseBody.put("status", status.value());
 
-        String errors = ex.getMessage();
+        String errors = ex.getLocalizedMessage();
 
-        responseBody.put("error", errors);
+        responseBody.put("errors", errors);
 
         return new ResponseEntity<>(responseBody, headers, status);
+    }
+
+    //TODO : Change this exception handler for more convenient way
+    @ExceptionHandler (ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<Object> handleConstraintViolationException(
+            ConstraintViolationException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }
