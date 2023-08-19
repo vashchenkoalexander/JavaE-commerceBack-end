@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.payoya.diplomaproject.api.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,6 +30,11 @@ public class User implements UserDetails {
     @Size(min = 2, message = "Password must be at least 2 chars")
     @Column(name = "password")
     private String password;
+
+    @Email
+    @NotBlank(message = "email address is required")
+    @Column(name = "email_address")
+    private String emailAddress;
 
     @Size(min = 2, message = "First Name must be at least 2 chars")
     @Column(name = "first_name")
@@ -143,6 +149,14 @@ public class User implements UserDetails {
 
     public void setPostsList(List<Post> posts){
      this.postsList = posts;
+    }
+
+    public String getEmailAddress(){
+        return this.emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress){
+        this.emailAddress = emailAddress;
     }
 
 }
