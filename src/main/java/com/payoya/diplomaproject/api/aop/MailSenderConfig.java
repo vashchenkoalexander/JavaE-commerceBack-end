@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MailSenderConfig {
 
-    @AfterReturning("execution(* com.payoya.diplomaproject.api.service.UserService.createNewUser())")
+    @After(value = "execution(* com.payoya.diplomaproject.api.service.UserService.createNewUser(..))")
     public void afterUserIsCreate(){
         System.err.println("user is created");
     }
