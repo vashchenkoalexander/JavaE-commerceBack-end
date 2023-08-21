@@ -64,6 +64,11 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency> <!-- dependency for aspect oriented programing-->
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>

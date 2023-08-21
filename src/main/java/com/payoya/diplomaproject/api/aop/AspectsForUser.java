@@ -1,15 +1,20 @@
 package com.payoya.diplomaproject.api.aop;
 
+import com.payoya.diplomaproject.api.email.MailSenderService;
 import com.payoya.diplomaproject.api.entity.User;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
 public class AspectsForUser {
+
+    private MailSenderService mailSender;
+
+    public AspectsForUser(MailSenderService mailSender) {
+        this.mailSender = mailSender;
+    }
 
     //TODO : create an AOP classes for sending emails by email addresses after successful registration
 
@@ -35,6 +40,7 @@ public class AspectsForUser {
      */
     @AfterReturning(pointcut = "execution(* com.payoya.diplomaproject.api.repository.IUserRepository.save(..))", returning = "user")
     public void getEmailAddress(User user){
+        mailSender.sendEmail(user.getEmailAddress(), "Welcome to party",  "Dear user: " + user.getUsername() + ". WelcomeMaDearFriend");
         System.err.println("user username is: " + user.getUsername());
     }
 
