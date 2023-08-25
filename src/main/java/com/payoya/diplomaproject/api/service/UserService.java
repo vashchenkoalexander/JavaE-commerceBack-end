@@ -3,6 +3,10 @@ package com.payoya.diplomaproject.api.service;
 import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.exceptions.UsernameExistException;
 import com.payoya.diplomaproject.api.repository.IUserRepository;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,11 +16,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService {
 
-    private IUserRepository userRepository;
+    private final IUserRepository userRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(IUserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(IUserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -34,10 +38,12 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public Iterable<User> findAllUsers(){
         return userRepository.findAll();
     }
 
+    @PostAuthorize("returnObject.username == principal.username")
     public User findUserById(Long id) {
         return userRepository.findById(id).orElse(new User());
     }
@@ -58,6 +64,7 @@ public class UserService implements UserDetailsService {
 
     }
 
+    @PostAuthorize("returnObject.id == principal.id")
     public void deleteUserById(Long id){
         userRepository.deleteById(id);
     }
@@ -68,7 +75,7 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserByUsername(username).orElseThrow(()
-                -> new UsernameNotFoundException("user now found with this username" + username));
+                -> new UsernameNotFoundException("user not found with this username" + username));
     }
 
     //TODO : create a mail sender for successfully creation of user and maybe create a JMS for working with asynchronous code
