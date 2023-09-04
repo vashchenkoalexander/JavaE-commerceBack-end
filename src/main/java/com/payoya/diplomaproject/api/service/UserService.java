@@ -4,7 +4,6 @@ import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.exceptions.UsernameExistException;
 import com.payoya.diplomaproject.api.repository.IUserRepository;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -38,12 +38,13 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
-    public Iterable<User> findAllUsers(){
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+    public List<User> findAllUsers(){
         return userRepository.findAll();
     }
 
-    @PostAuthorize("returnObject.username == principal.username")
+    //@PostAuthorize("returnObject.username == principal.username")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public User findUserById(Long id) {
         return userRepository.findById(id).orElse(new User());
     }
@@ -56,6 +57,7 @@ public class UserService implements UserDetailsService {
             userUpd.setPassword(user.getPassword());
             userUpd.setFirstName(user.getFirstName());
             userUpd.setLastName(user.getLastName());
+            userUpd.setRole(user.getRole());
 
             return userRepository.save(userUpd);
         }else {

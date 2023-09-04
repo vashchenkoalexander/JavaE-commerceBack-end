@@ -6,6 +6,8 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Aspect
 @Component
 public class AspectsForUser {
@@ -38,8 +40,8 @@ public class AspectsForUser {
      */
     @AfterReturning(pointcut = "execution(* com.payoya.diplomaproject.api.repository.IUserRepository.save(..))", returning = "user")
     public void getEmailAddress(User user){
-        mailSender.sendEmail(user.getEmailAddress(), "Welcome to party",  "Dear user: " + user.getUsername() + ". WelcomeMaDearFriend");
-        System.err.println("user username is: " + user.getUsername());
+        //mailSender.sendEmail(user.getEmailAddress(), "Welcome to party",  "Dear user: " + user.getUsername() + ". WelcomeMaDearFriend");
+        System.err.println("user username is: " + user.getUsername() + LocalDateTime.now());
     }
 
 }

@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
@@ -48,6 +49,10 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private Role role;
+
+//    @NotNull(message = "role is required")
+//    @Column(name = "role")
+//    private String roles; //TODO create new entity Role and create role
 
     @Column(name = "date_of_create")
     private Date dateOfCreate;
@@ -98,7 +103,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>(Collections.singleton(role)); //IS THIS WORKING PROPER???!?!?!?
+        return Arrays.stream(getRole().toString().split(","))
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
 
     public Role getRole() {

@@ -31,7 +31,7 @@ public class MailSenderService {
 
         mailSender.send(message);
 
-        System.err.println("email sent");
+        System.err.println("email sent" + LocalDateTime.now());
 //        System.err.println("Time end : " + LocalDateTime.now());
     }
 
