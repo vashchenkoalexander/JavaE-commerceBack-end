@@ -16,8 +16,6 @@ public class AspectsForUser {
         this.mailSender = mailSender;
     }
 
-    //TODO : create an AOP classes for sending emails by email addresses after successful registration
-
 //    @After(value = "execution(* com.payoya.diplomaproject.api.service.UserService.createNewUser(..))")
 //    public void afterUserIsCreate(){
 //        System.err.println("user is created");

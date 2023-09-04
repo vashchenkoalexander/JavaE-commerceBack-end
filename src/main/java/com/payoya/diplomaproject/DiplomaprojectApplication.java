@@ -10,4 +10,9 @@ public class DiplomaprojectApplication {
         SpringApplication.run(DiplomaprojectApplication.class, args);
     }
 
+    //TODO implement mongoDB
+    //TODO implement JMS with ArtemisMQ
+    //TODO write tests
+
+
 }

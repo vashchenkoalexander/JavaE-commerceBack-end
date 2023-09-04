@@ -15,7 +15,7 @@ import java.util.Properties;
 @EnableAsync
 public class MailSenderConfig {
 
-    //TODO create an MailConfig for sending mails for created users
+    //TODO change email sender for noreplypayoyaEA@gmail.com
 
     @Bean
     public JavaMailSender getJavaMailSender() {
@@ -31,9 +31,9 @@ public class MailSenderConfig {
 
         Properties props = mailSender.getJavaMailProperties();
 //        props.put("mail.transport.protocol", "smtp"); // for debug purposes
+//        props.put("mail.debug", "true");              // for debug purposes
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-//        props.put("mail.debug", "true");              // for debug purposes
 
         return mailSender;
     }

@@ -14,7 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -22,13 +25,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private UserService userService;
-
-    public SecurityConfig(UserService userService) {
-        this.userService = userService;
-    }
-
+//    @Bean
+//    JdbcUserDetailsManager users(){
+//        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
+//        return jdbcUserDetailsManager;
+//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -46,19 +47,6 @@ public class SecurityConfig {
                 //.and()
                 .build();
     }
-
-//    @Bean
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
-//    }
-
-//    @Bean
-//    public AuthenticationProvider authenticationProvider(){
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setUserDetailsService(userService);
-//        authenticationProvider.setPasswordEncoder(passwordEncoder());
-//        return authenticationProvider;
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
