@@ -38,7 +38,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    //@PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MODERATOR')")
     public List<User> findAllUsers(){
         return userRepository.findAll();
     }

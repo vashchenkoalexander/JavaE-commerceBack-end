@@ -50,10 +50,6 @@ public class User implements UserDetails {
     @Column(name = "role")
     private Role role;
 
-//    @NotNull(message = "role is required")
-//    @Column(name = "role")
-//    private String roles; //TODO create new entity Role and create role
-
     @Column(name = "date_of_create")
     private Date dateOfCreate;
 
