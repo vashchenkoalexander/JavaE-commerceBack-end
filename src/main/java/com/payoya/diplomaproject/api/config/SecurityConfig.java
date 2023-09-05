@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final UserService userService;
@@ -27,18 +27,16 @@ public class SecurityConfig {
         //http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         return http.csrf().disable()
                 .userDetailsService(userService)
-                //.authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/user/all").hasAnyRole("ROLE_USER", "ROLE_ADMIN"))
+                //.authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/user/all").hasAuthority("USER"))
+//                .authorizeHttpRequests()
+//                .requestMatchers( "/api/v1/user/all","/api/v1/user/new").permitAll().and()
                 .authorizeHttpRequests()
-                .requestMatchers( "/api/v1/user/all","/api/v1/user/new").permitAll().and()
+                .requestMatchers("/api/v1/user/new").permitAll().and()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/user/all").hasAnyAuthority("ADMIN","USER"))
                 .authorizeHttpRequests()
                 .requestMatchers("/home")
                 .authenticated()
                 .and().formLogin().and()
-
-                //csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                //.and()
-                //.authorizeHttpRequests().requestMatchers("/**").permitAll()
-                //.and()
                 .build();
     }
 

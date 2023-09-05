@@ -38,13 +38,13 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+    //@PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public List<User> findAllUsers(){
         return userRepository.findAll();
     }
 
     //@PostAuthorize("returnObject.username == principal.username")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     public User findUserById(Long id) {
         return userRepository.findById(id).orElse(new User());
     }
