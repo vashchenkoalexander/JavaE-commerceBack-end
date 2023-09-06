@@ -1,6 +1,7 @@
 package com.payoya.diplomaproject.api.service;
 
 import com.payoya.diplomaproject.api.entity.User;
+import com.payoya.diplomaproject.api.enums.Role;
 import com.payoya.diplomaproject.api.exceptions.UsernameExistException;
 import com.payoya.diplomaproject.api.repository.IUserRepository;
 import org.springframework.context.annotation.Lazy;
@@ -34,6 +35,11 @@ public class UserService implements UserDetailsService {
         if(user.getDateOfCreate() == null){
             user.setDateOfCreate();
         }
+
+        if(user.getRole() == null){
+            user.setRole(Role.USER);
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }

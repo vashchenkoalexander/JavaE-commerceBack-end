@@ -24,16 +24,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        return http.csrf().disable()
+        return http.httpBasic().and().csrf().disable()
                 .userDetailsService(userService)
-                .authorizeHttpRequests()
-                .requestMatchers("/api/v1/user/new").permitAll().and()
-                .authorizeHttpRequests().requestMatchers("/api/v1/user/all", "/api/v1/user/{id}").authenticated().and()
-                //.authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/user/all").hasAnyAuthority("ADMIN","USER"))
-                .authorizeHttpRequests()
-                .requestMatchers("/home")
-                .authenticated()
-                .and().formLogin().and()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/user/new").permitAll().and())
+                .authorizeHttpRequests(auth -> auth.requestMatchers(
+                        "/api/v1/user/all", "/api/v1/user/{id}" , "/home"
+                ).authenticated().and())
+                .formLogin().and()
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/**").permitAll().and())
                 .build();
     }
 

@@ -45,7 +45,7 @@ public class User implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull(message = "role is required")
+    //@NotNull(message = "role is required")
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private Role role;
