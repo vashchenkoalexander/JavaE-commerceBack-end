@@ -67,7 +67,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
+        </dependency> <!-- dependency for sending mails though mail server-->
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-artemis</artifactId>
+        </dependency> <!-- dependency for sending messages though apache-artemis -->
 
     </dependencies>
 
