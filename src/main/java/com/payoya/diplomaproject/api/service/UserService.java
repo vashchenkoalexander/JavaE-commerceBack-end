@@ -5,6 +5,9 @@ import com.payoya.diplomaproject.api.enums.Role;
 import com.payoya.diplomaproject.api.exceptions.UsernameExistException;
 import com.payoya.diplomaproject.api.repository.IUserRepository;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+
 import java.util.List;
 
 @Service
@@ -86,5 +91,12 @@ public class UserService implements UserDetailsService {
                 -> new UsernameNotFoundException("user not found with this username" + username));
     }
 
-    //TODO : create a mail sender for successfully creation of user and maybe create a JMS for working with asynchronous code
+//    public List<User> findAllUsersByFirstName(String firstName, Pageable pageable){
+//        return userRepository.findAllByFirstName(firstName, pageable);
+//    }
+
+    public List<User> findAllUsersByFirstName(Pageable pageable){
+        return userRepository.findAll(pageable).stream().toList();
+    }
+
 }
