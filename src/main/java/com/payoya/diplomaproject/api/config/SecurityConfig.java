@@ -25,6 +25,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         return http.httpBasic().and().csrf().disable()
+                .requiresChannel(channel -> channel.anyRequest().requiresSecure())
                 .userDetailsService(userService)
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/user/new").permitAll().and())
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
