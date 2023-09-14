@@ -15,8 +15,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -91,9 +93,14 @@ public class UserService implements UserDetailsService {
                 -> new UsernameNotFoundException("user not found with this username" + username));
     }
 
-//    public List<User> findAllUsersByFirstName(String firstName, Pageable pageable){
-//        return userRepository.findAllByFirstName(firstName, pageable);
-//    }
+    /*
+    processing given Long id and MultipartFile multipartFile for add to existed user an image
+     */
+    public void uploadImage(Long id, MultipartFile multipartFile) throws IOException{
+        User user = userRepository.findById(id).orElse(null);
+        user.setImage(multipartFile.getBytes());
+        userRepository.save(user);
+    }
 
     public List<User> findAllUsersByFirstName(Pageable pageable){
         return userRepository.findAll(pageable).stream().toList();
