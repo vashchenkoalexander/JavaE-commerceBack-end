@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,14 +53,17 @@ public class UserRestController {
         userService.deleteUserById(id);
     }
 
-//    @GetMapping("/123")
-//    public List<User> findAllUsersByFirst(@PathVariable String firstName, @PageableDefault(page = 0, size = 5) Pageable pageable){
-//        return userService.findAllUsersByFirstName(firstName, pageable);
-//    }
-
     @GetMapping("/paged")
     public List<User> findAllUsersByFirstName(@PageableDefault(page = 0, size = 20) Pageable pageable){
         return userService.findAllUsersByFirstName(pageable);
+    }
+
+    /*
+    method for upload image into user entity for created user
+     */
+    @PatchMapping("image/{id}")
+    public void uploadImage(@PathVariable Long id, @RequestParam MultipartFile file) throws IOException {
+        userService.uploadImage(id, file);
     }
 
 

@@ -6,7 +6,10 @@ import com.payoya.diplomaproject.api.mongoDB.BaseEntityService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
-
+/*
+Class for working with JMS ActiveMQ Artemis for produce message to server ActiveMQ Artemis
+ properties for this work in application.properties
+ */
 @Component
 public class ArtemisProducer {
 

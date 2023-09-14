@@ -11,8 +11,9 @@ public class DiplomaprojectApplication {
     }
 
     //TODO implement mongoDB
+    //TODO implement in Entity Post field tag
+    //TODO expand project to create an marketplace|shop
     //TODO implement JMS with ArtemisMQ
     //TODO write tests
-
 
 }

@@ -1,12 +1,11 @@
 package com.payoya.diplomaproject.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.payoya.diplomaproject.api.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -45,13 +44,15 @@ public class User implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    //@NotNull(message = "role is required")
     @Enumerated(value = EnumType.STRING)
     @Column(name = "role")
     private Role role;
 
     @Column(name = "date_of_create")
     private Date dateOfCreate;
+
+    @Column(name = "image")
+    private byte[] image;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
@@ -144,6 +145,14 @@ public class User implements UserDetails {
         if(dateOfCreate == null){
             dateOfCreate = new Date();
         }
+    }
+
+    public byte[] getImage(){
+        return this.image;
+    }
+
+    public void setImage(byte[] image){
+        this.image = image;
     }
 
     public List<Post> getPostsList(){
