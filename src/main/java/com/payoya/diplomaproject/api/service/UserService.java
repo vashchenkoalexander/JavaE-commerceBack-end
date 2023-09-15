@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User createNewUser (User user) throws RuntimeException {
+    public User saveNewUser(User user) throws RuntimeException {
 
         if(userRepository.findUserByUsername(user.getUsername()).isPresent()){
             throw new UsernameExistException("user with this login is exist: " + user.getUsername());
@@ -74,7 +74,7 @@ public class UserService implements UserDetailsService {
 
             return userRepository.save(userUpd);
         }else {
-            return createNewUser(user);
+            return saveNewUser(user);
         }
 
     }

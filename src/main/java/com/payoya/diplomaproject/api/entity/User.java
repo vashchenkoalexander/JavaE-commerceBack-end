@@ -58,6 +58,17 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Post> postsList;
 
+    public User(){}
+
+    public User(Long id, String username, String password, String firstName, String lastName, String emailAddress){
+        this.id=id;
+        this.username= username;
+        this.password=password;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.emailAddress=emailAddress;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -171,4 +182,19 @@ public class User implements UserDetails {
         this.emailAddress = emailAddress;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", role=" + role +
+                ", dateOfCreate=" + dateOfCreate +
+                ", image=" + Arrays.toString(image) +
+                ", postsList=" + postsList +
+                '}';
+    }
 }

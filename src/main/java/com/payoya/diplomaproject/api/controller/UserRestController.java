@@ -29,7 +29,7 @@ public class UserRestController {
 
     @PostMapping("/new")
     public ResponseEntity<User> createNewUser(@RequestBody @Valid User user){
-        return new ResponseEntity<>(userService.createNewUser(user), HttpStatusCode.valueOf(201));
+        return new ResponseEntity<>(userService.saveNewUser(user), HttpStatusCode.valueOf(201));
     }
 
     @GetMapping("/all")
