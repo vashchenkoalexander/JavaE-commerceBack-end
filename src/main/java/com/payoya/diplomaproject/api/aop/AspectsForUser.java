@@ -5,12 +5,14 @@ import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.jms_activemq_artemis.ArtemisProducer;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Aspect
 @Component
+@Profile("prod")
 public class AspectsForUser {
 
     private MailSenderService mailSender;
@@ -47,7 +49,7 @@ public class AspectsForUser {
     @AfterReturning(pointcut = "execution(* com.payoya.diplomaproject.api.repository.IUserRepository.save(..))", returning = "user")
     public void getEmailAddress(User user){
         producer.sendMessage(user); // work with ActiveMQ Artemis
-        //mailSender.sendEmail(user.getEmailAddress(), "Welcome to party",  "Dear user: " + user.getUsername() + ". WelcomeMaDearFriend");
+        mailSender.sendEmail(user.getEmailAddress(), "Welcome to party",  "Dear user: " + user.getUsername() + ". WelcomeMaDearFriend");
         System.err.println("user's username is: " + user.getUsername() + " " + LocalDateTime.now());
     }
 

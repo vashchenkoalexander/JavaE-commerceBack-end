@@ -8,6 +8,9 @@ import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "posts")
 public class Post {
@@ -21,6 +24,12 @@ public class Post {
     @Column(name = "body")
     @Nullable
     private String body;
+
+    @Column(name = "tag")
+    private String tag;
+
+    @Column(name = "date_of_create")
+    private LocalDateTime dateOfCreate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -48,13 +57,28 @@ public class Post {
         this.body = body;
     }
 
-    //@JsonIgnore
     public User getUser(){
         return this.user;
     }
 
     public void setUser(User user){
         this.user = user;
+    }
+
+    public String getTag(){
+        return this.tag;
+    }
+
+    public void setTag(String tag){
+        this.tag = tag;
+    }
+
+    public LocalDateTime getDateOfCreate(){
+        return this.dateOfCreate;
+    }
+
+    public void setDateOfCreate(LocalDateTime localDateTimeNow){
+        this.dateOfCreate = localDateTimeNow;
     }
 
     public Long getUserIdBelongsToPost(){

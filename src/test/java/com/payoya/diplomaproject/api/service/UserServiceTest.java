@@ -1,13 +1,22 @@
 package com.payoya.diplomaproject.api.service;
 
 import com.payoya.diplomaproject.api.entity.User;
+import com.payoya.diplomaproject.api.enums.Role;
 import com.payoya.diplomaproject.api.repository.IUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
 
 
 import java.util.ArrayList;
@@ -19,9 +28,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@SpringBootTest
 class UserServiceTest {
 
-    @InjectMocks
+    @Autowired
     private UserService userService;
 
     @Mock
@@ -44,10 +54,6 @@ class UserServiceTest {
         mockUsersList.add(new User(4L,"deniSka", "pass", "Denis", "Shvec", "deniSka@gmail.com"));
 
         when(userRepository.findAll()).thenReturn(mockUsersList);
-
-        for (User user : mockUsersList) {
-            when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
-        }
     }
 
     @Test
@@ -78,19 +84,22 @@ class UserServiceTest {
         assertEquals(4, mockUsersList.size());
     }
 
+    /*
+    This test work with real db and with at least 3 data fields
+     */
     @Test
     void findUserById() {
         // Call the service method to retrieve the user details
         User user = userService.findUserById(1L);
-        User user4 = userService.findUserById(4L);
+        User user3 = userService.findUserById(3L);
 
-        //userService.findAllUsers().forEach(System.out::println);
+        userService.findAllUsers().forEach(System.out::println);
 
         // Assert that the returned User object contains the expected values
-        assertEquals("Name", user.getFirstName());
-        assertEquals("Surr_name", user.getLastName());
-        assertEquals("1234@gmail.com", user.getEmailAddress());
-        assertEquals("pass", user4.getPassword());
+        assertEquals("bbbb", user.getFirstName());
+        assertEquals("Bbbbb", user.getLastName());
+        assertEquals("123@gmail.com", user.getEmailAddress());
+        assertEquals("$2a$10$kIHeKpZtIUcy6nVbmHlAP.fMTGo6ag55jEZzpbBMGlFkqaPeWLOrK", user3.getPassword());
     }
 
     @Test
@@ -99,8 +108,6 @@ class UserServiceTest {
 
     @Test
     void loadUserByUsername() {
-
-        //assertEquals(true, );
 
     }
 

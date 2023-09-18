@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -49,7 +50,7 @@ public class User implements UserDetails {
     private Role role;
 
     @Column(name = "date_of_create")
-    private Date dateOfCreate;
+    private LocalDateTime dateOfCreate;
 
     @Column(name = "image")
     private byte[] image;
@@ -61,12 +62,13 @@ public class User implements UserDetails {
     public User(){}
 
     public User(Long id, String username, String password, String firstName, String lastName, String emailAddress){
-        this.id=id;
+        this.id = id;
         this.username= username;
         this.password=password;
         this.firstName=firstName;
         this.lastName=lastName;
         this.emailAddress=emailAddress;
+        this.dateOfCreate = LocalDateTime.now();
     }
 
     public void setId(Long id) {
@@ -144,18 +146,12 @@ public class User implements UserDetails {
         return this.lastName;
     }
 
-    public Date getDateOfCreate(){
-        if(dateOfCreate == null){
-            dateOfCreate = new Date();
-            return dateOfCreate;
-        }
+    public LocalDateTime getDateOfCreate() {
         return dateOfCreate;
     }
 
-    public void setDateOfCreate(){
-        if(dateOfCreate == null){
-            dateOfCreate = new Date();
-        }
+    public void setDateOfCreate(LocalDateTime localDateTime) {
+        this.dateOfCreate = localDateTime;
     }
 
     public byte[] getImage(){
@@ -193,8 +189,6 @@ public class User implements UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", role=" + role +
                 ", dateOfCreate=" + dateOfCreate +
-                ", image=" + Arrays.toString(image) +
-                ", postsList=" + postsList +
                 '}';
     }
 }

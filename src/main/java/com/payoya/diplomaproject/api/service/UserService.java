@@ -19,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -39,8 +41,8 @@ public class UserService implements UserDetailsService {
             throw new UsernameExistException("user with this login is exist: " + user.getUsername());
         }
 
-        if(user.getDateOfCreate() == null){
-            user.setDateOfCreate();
+        if(user.getDateOfCreate() == null ){
+            user.setDateOfCreate(LocalDateTime.now().withNano(0));
         }
 
         if(user.getRole() == null){
@@ -53,11 +55,15 @@ public class UserService implements UserDetailsService {
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MODERATOR')")
     public List<User> findAllUsers(){
-        return userRepository.findAll();
+        List<User> usersList = userRepository.findAll();
+        return usersList;
     }
 
-    //@PostAuthorize("returnObject.username == principal.username")
-    @PreAuthorize("hasAnyAuthority('USER','ADMIN')")
+    /*
+    this method return data only when user have this id login and pass or Authority's ADMIN
+     */
+    @PostAuthorize("returnObject.username == principal.username || hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     public User findUserById(Long id) {
         return userRepository.findById(id).orElse(new User());
     }
@@ -102,8 +108,8 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public List<User> findAllUsersByFirstName(Pageable pageable){
-        return userRepository.findAll(pageable).stream().toList();
+    public List<User> findAllUsersByFirstName(String firstName, Pageable pageable){
+        return userRepository.findAllByFirstName(firstName, pageable).stream().toList();
     }
 
 }
