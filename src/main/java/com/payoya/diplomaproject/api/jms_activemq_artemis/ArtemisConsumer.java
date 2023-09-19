@@ -1,6 +1,7 @@
 package com.payoya.diplomaproject.api.jms_activemq_artemis;
 
 import org.springframework.cglib.core.Local;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ class which listening queue jms.queue.destination from file application.properti
  */
 
 @Component
+@Profile("prod")
 public class ArtemisConsumer {
 
     @JmsListener(destination = "${jms.queue.destination}")

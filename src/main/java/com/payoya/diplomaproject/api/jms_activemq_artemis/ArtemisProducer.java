@@ -4,6 +4,7 @@ import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.mongoDB.BaseEntity;
 import com.payoya.diplomaproject.api.mongoDB.BaseEntityService;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Component;
 /*
@@ -11,6 +12,7 @@ Class for working with JMS ActiveMQ Artemis for produce message to server Active
  properties for this work in application.properties
  */
 @Component
+@Profile("prod")
 public class ArtemisProducer {
 
     private JmsTemplate jmsTemplate;

@@ -1,11 +1,13 @@
 package com.payoya.diplomaproject.api.mongoDB;
 
 import jakarta.persistence.Id;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
 @Document
+@Profile("prod")
 public class BaseEntity {
 
     @Id

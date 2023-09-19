@@ -29,7 +29,7 @@ public class UserRestController {
 
     @PostMapping("/new")
     public ResponseEntity<User> createNewUser(@RequestBody @Valid User user){
-        return new ResponseEntity<>(userService.createNewUser(user), HttpStatusCode.valueOf(201));
+        return new ResponseEntity<>(userService.saveNewUser(user), HttpStatusCode.valueOf(201));
     }
 
     @GetMapping("/all")
@@ -53,9 +53,13 @@ public class UserRestController {
         userService.deleteUserById(id);
     }
 
+    /*
+    this method return all Users with FirstName who was presented like RequestParam in api also you can change Pageable
+     with fields page and size also in RequestParam property
+     */
     @GetMapping("/paged")
-    public List<User> findAllUsersByFirstName(@PageableDefault(page = 0, size = 20) Pageable pageable){
-        return userService.findAllUsersByFirstName(pageable);
+    public List<User> findAllUsersByFirstName(@RequestParam String firstName, @PageableDefault(page = 0, size = 20) Pageable pageable){
+        return userService.findAllUsersByFirstName(firstName, pageable);
     }
 
     /*
@@ -65,6 +69,5 @@ public class UserRestController {
     public void uploadImage(@PathVariable Long id, @RequestParam MultipartFile file) throws IOException {
         userService.uploadImage(id, file);
     }
-
 
 }

@@ -3,6 +3,7 @@ package com.payoya.diplomaproject.api.email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -13,6 +14,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableAsync
+@Profile("prod")
 public class MailSenderConfig {
 
     //TODO change email sender for noreplypayoyaEA@gmail.com
