@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,6 +58,7 @@ public class UserService implements UserDetailsService {
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MODERATOR')")
     public List<User> findAllUsers(){
         List<User> usersList = userRepository.findAll();
+
         return usersList;
     }
 
@@ -110,6 +113,14 @@ public class UserService implements UserDetailsService {
 
     public List<User> findAllUsersByFirstName(String firstName, Pageable pageable){
         return userRepository.findAllByFirstName(firstName, pageable).stream().toList();
+    }
+
+    /*
+    method for retrieve image from userRepository without checks for anything
+     */
+    public ResponseEntity<byte[]> getImageFromUser(Long id){
+
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(userRepository.findById(id).get().getImage());
     }
 
 }

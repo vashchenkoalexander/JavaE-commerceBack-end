@@ -59,6 +59,10 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Post> postsList;
 
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Product> productList;
+
     public User(){}
 
     public User(Long id, String username, String password, String firstName, String lastName, String emailAddress){
@@ -177,6 +181,15 @@ public class User implements UserDetails {
     public void setEmailAddress(String emailAddress){
         this.emailAddress = emailAddress;
     }
+
+    public List<Product> getProductList(){
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList){
+        this.productList= productList;
+    }
+
 
     @Override
     public String toString() {
