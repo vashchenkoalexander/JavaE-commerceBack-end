@@ -76,7 +76,7 @@ public class UserService implements UserDetailsService {
             User userUpd = userRepository.findById(id).get();
 
             userUpd.setUsername(user.getUsername());
-            userUpd.setPassword(user.getPassword());
+            userUpd.setPassword(passwordEncoder.encode(user.getPassword()));
             userUpd.setFirstName(user.getFirstName());
             userUpd.setLastName(user.getLastName());
             userUpd.setRole(user.getRole());

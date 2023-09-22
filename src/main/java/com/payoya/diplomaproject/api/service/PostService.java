@@ -4,6 +4,7 @@ import com.payoya.diplomaproject.api.entity.Post;
 import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.repository.IPostRepository;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,7 @@ public class PostService {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public List<Post> findAllPosts(){
         return postRepository.findAll();
     }

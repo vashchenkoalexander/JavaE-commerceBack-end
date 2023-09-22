@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,9 +23,17 @@ public class SecurityConfig {
         this.userService = userService;
     }
 
+    /*
+    Remove the ROLE_ prefix in security annotations for hasRole or hasAnyRole
+     */
+    @Bean
+    GrantedAuthorityDefaults grantedAuthorityDefaults() {
+        return new GrantedAuthorityDefaults("");
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        return http.httpBasic().and().csrf().disable()
+        return http.httpBasic().and().cors().and().csrf().disable()
                 .requiresChannel(channel -> channel.anyRequest().requiresSecure())
                 .userDetailsService(userService)
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/user/new").permitAll().and())
