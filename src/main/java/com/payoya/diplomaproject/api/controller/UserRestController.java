@@ -54,6 +54,12 @@ public class UserRestController {
         userService.deleteUserById(id);
     }
 
+    @DeleteMapping("/delete")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUserByUsername(@RequestParam String username){
+        userService.deleteUserByUsername(username);
+    }
+
     /*
     this method return all Users with FirstName who was presented like RequestParam in api also you can change Pageable
      with fields page and size also in RequestParam property

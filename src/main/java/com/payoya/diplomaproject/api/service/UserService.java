@@ -88,9 +88,16 @@ public class UserService implements UserDetailsService {
 
     }
 
-    @PostAuthorize("returnObject.id == principal.id")
+    @PreAuthorize("principal.username == userService.findUserById(#id).username")
     public void deleteUserById(Long id){
         userRepository.deleteById(id);
+    }
+
+    @PreAuthorize("principal.username == #username")
+    public void deleteUserByUsername(String username){
+        User user = (User) loadUserByUsername(username);
+        System.err.println(user);
+        deleteUserById(user.getId());
     }
 
     /*

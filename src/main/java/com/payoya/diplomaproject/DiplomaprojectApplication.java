@@ -16,5 +16,5 @@ public class DiplomaprojectApplication {
     //TODO implement JMS with ArtemisMQ
     //TODO write tests
     //TODO Create Entities for marketPlace project
-
+    //TODO create email confirmation
 }
