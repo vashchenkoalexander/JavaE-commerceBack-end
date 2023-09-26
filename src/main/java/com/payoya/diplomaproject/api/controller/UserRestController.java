@@ -78,11 +78,16 @@ public class UserRestController {
     }
 
     /*
-    GetMapping for retrive image from userService
+    GetMapping for retrieve image from userService
      */
     @GetMapping("userimage/{id}")
     public ResponseEntity<byte[]> getImageFromUser(@PathVariable Long id){
         return userService.getImageFromUser(id);
+    }
+
+    @GetMapping("/activate")
+    public boolean ActivateAccount(@RequestParam String token){
+        return userService.activateAccount(token);
     }
 
 }

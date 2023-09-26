@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -50,6 +51,11 @@ public class UserService implements UserDetailsService {
         if(user.getRole() == null){
             user.setRole(Role.USER);
         }
+
+        //String activationToken = UUID.randomUUID().toString();
+
+        user.setActivationToken(UUID.randomUUID().toString());
+        user.setIsActive(true);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
@@ -128,6 +134,22 @@ public class UserService implements UserDetailsService {
     public ResponseEntity<byte[]> getImageFromUser(Long id){
 
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(userRepository.findById(id).get().getImage());
+    }
+
+
+    public boolean activateAccount(String token) {
+        // Find the user by activation token.
+        User user = userRepository.findUserByActivationToken(token).get();
+
+        if(user.getActivationToken() != null){
+            user.setActivationToken(null);
+            userRepository.save(user);
+            // Activation successful
+            return true;
+        }
+
+
+        return false; // Invalid or expired token
     }
 
 }

@@ -1,7 +1,6 @@
 package com.payoya.diplomaproject.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.payoya.diplomaproject.api.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -63,6 +62,10 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Product> productList;
 
+    private String activationToken;
+
+    private Boolean isActive = false;
+
     public User(){}
 
     public User(Long id, String username, String password, String firstName, String lastName, String emailAddress){
@@ -93,22 +96,22 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return isActive;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isActive;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return isActive;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive;
     }
 
     public void setPassword(String password){
@@ -190,7 +193,6 @@ public class User implements UserDetails {
         this.productList= productList;
     }
 
-
     @Override
     public String toString() {
         return "User{" +
@@ -203,5 +205,21 @@ public class User implements UserDetails {
                 ", role=" + role +
                 ", dateOfCreate=" + dateOfCreate +
                 '}';
+    }
+
+    public String getActivationToken() {
+        return activationToken;
+    }
+
+    public void setActivationToken(String activationToken) {
+        this.activationToken = activationToken;
+    }
+
+    public Boolean getIsActive(){
+        return this.isActive;
+    }
+
+    public void setIsActive(Boolean isActive){
+        this.isActive = isActive;
     }
 }

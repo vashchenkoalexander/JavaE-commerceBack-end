@@ -49,7 +49,8 @@ public class AspectsForUser {
     @AfterReturning(pointcut = "execution(* com.payoya.diplomaproject.api.repository.IUserRepository.save(..))", returning = "user")
     public void getEmailAddress(User user){
         producer.sendMessage(user); // work with ActiveMQ Artemis
-        mailSender.sendEmail(user.getEmailAddress(), "Welcome to party",  "Dear user: " + user.getUsername() + ". WelcomeMaDearFriend");
+        //mailSender.sendEmail(user.getEmailAddress(), "Welcome to party",  "Dear user: " + user.getUsername() + ". WelcomeMaDearFriend");
+        mailSender.sendActivationEmail(user.getEmailAddress(), user.getActivationToken());
         System.err.println("user's username is: " + user.getUsername() + " " + LocalDateTime.now());
     }
 
