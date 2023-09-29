@@ -25,17 +25,21 @@ public class ProductService {
 
     }
 
+    public Product findProductById(Long id){
+        return productRepository.findById(id).orElse(null);
+    }
+
     public Product saveNewProduct(Product product){
         product.setDateofCreate(LocalDateTime.now().withNano(0));
         return productRepository.save(product);
     }
 
-    @PostAuthorize("returnObject.user.username == principal.username")
-    public Product saveNewProductWithUser(Long id, Product product){
-        product.setUser(userService.findUserById(id));
-        return saveNewProduct(product);
-    }
-
+//    @PostAuthorize("returnObject.user.username == principal.username")
+//    public Product saveNewProductWithUser(Long id, Product product){
+//        product.setUser(userService.findUserById(id));
+//        //product.setCartItems(null);
+//        return saveNewProduct(product);
+//    }
 
 
     public void deleteProductById(Long id){

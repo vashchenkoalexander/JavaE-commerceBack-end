@@ -1,12 +1,16 @@
 package com.payoya.diplomaproject.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -22,11 +26,17 @@ public class Product {
 
     @Column(name = "body_title")
     @NotNull(message = "bodyTitle must be present")
-    @Lob
     @Size(max = 20000)
     private String bodyTitle;
 
+    @Column(name = "price")
+    private Double price;
+
+    @Column(name = "stock_Quantity")
+    private Integer stockQuantity;
+
     @Column(name = "image")
+    @Nullable
     private byte[] image;
 
     @Column(name = "tags")
@@ -36,9 +46,9 @@ public class Product {
     @Column(name = "date_of_create")
     private LocalDateTime dateofCreate;
 
-    @ManyToOne
-    @JsonBackReference
-    private User user;
+    @OneToMany(mappedBy = "product")
+    @JsonManagedReference(value = "orderItems-product")
+    private List<OrderItem> orderItems;
 
     public Long getId() {
         return id;
@@ -68,13 +78,13 @@ public class Product {
         this.image=image;
     }
 
-    public User getUser(){
-        return this.user;
-    }
-
-    public void setUser(User user){
-        this.user = user;
-    }
+//    public User getUser(){
+//        return this.user;
+//    }
+//
+//    public void setUser(User user){
+//        this.user = user;
+//    }
 
     public void setTags(String tags) {
         this.tags = tags;
@@ -92,4 +102,35 @@ public class Product {
         this.dateofCreate = dateofCreate;
     }
 
+    public Integer getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(Integer stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+//    public List<CartItem> getCartItems() {
+//        return cartItems;
+//    }
+//
+//    public void setCartItems(List<CartItem> cartItems) {
+//        this.cartItems = cartItems;
+//    }
 }

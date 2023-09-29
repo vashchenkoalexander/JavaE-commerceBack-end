@@ -28,6 +28,11 @@ public class UserRestController {
         this.userService = userService;
     }
 
+    @PostMapping("/newUsers")
+    public ResponseEntity<List<User>> createNewUsersList(@RequestBody @Valid List<User> users){
+        return new ResponseEntity<>(userService.saveUsersList(users), HttpStatus.valueOf(201));
+    }
+
     @PostMapping("/new")
     public ResponseEntity<User> createNewUser(@RequestBody @Valid User user){
         return new ResponseEntity<>(userService.saveNewUser(user), HttpStatusCode.valueOf(201));

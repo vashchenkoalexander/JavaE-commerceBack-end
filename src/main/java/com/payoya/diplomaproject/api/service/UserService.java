@@ -1,13 +1,12 @@
 package com.payoya.diplomaproject.api.service;
 
+import com.payoya.diplomaproject.api.entity.Cart;
 import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.enums.Role;
 import com.payoya.diplomaproject.api.exceptions.UsernameExistException;
 import com.payoya.diplomaproject.api.repository.IUserRepository;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -22,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,11 +29,23 @@ public class UserService implements UserDetailsService {
 
     private final IUserRepository userRepository;
 
+    private CartService cartService;
+
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(IUserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
+    public UserService(IUserRepository userRepository, CartService cartService, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.cartService = cartService;
         this.passwordEncoder = passwordEncoder;
+    }
+
+    public List<User> saveUsersList(List<User> users){
+
+        for(User user: users){
+            saveNewUser(user);
+        }
+
+        return users;
     }
 
     public User saveNewUser(User user) throws RuntimeException {
@@ -52,13 +62,14 @@ public class UserService implements UserDetailsService {
             user.setRole(Role.USER);
         }
 
-        //String activationToken = UUID.randomUUID().toString();
-
         user.setActivationToken(UUID.randomUUID().toString());
         user.setIsActive(true);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+
+        userRepository.save(user); //saving user entity to db with repository
+        cartService.createNew(new Cart(), user); //creating new cart and binding with user which was just created
+        return user;
     }
 
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MODERATOR')")

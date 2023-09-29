@@ -36,7 +36,7 @@ public class SecurityConfig {
         return http.httpBasic().and().cors().and().csrf().disable()
                 .requiresChannel(channel -> channel.anyRequest().requiresSecure())
                 .userDetailsService(userService)
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/user/new").permitAll().and())
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/user/new", "/api/v1/user/newUsers").permitAll().and())
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
                         "/api/v1/user/all", "/api/v1/user/{id}" , "/home"
                 ).authenticated().and())

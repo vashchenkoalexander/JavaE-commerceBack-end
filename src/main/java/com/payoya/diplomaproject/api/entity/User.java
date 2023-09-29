@@ -55,14 +55,17 @@ public class User implements UserDetails {
     private byte[] image;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonManagedReference(value = "user-posts")
     private List<Post> postsList;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Product> productList;
+    @OneToOne(mappedBy = "user")
+    @JsonManagedReference(value = "user-shoppingCart")
+    private Cart shoppingCart;
 
     private String activationToken;
+
+    @OneToMany
+    private List<Order> orders;
 
     private Boolean isActive = false;
 
@@ -185,13 +188,13 @@ public class User implements UserDetails {
         this.emailAddress = emailAddress;
     }
 
-    public List<Product> getProductList(){
-        return productList;
-    }
-
-    public void setProductList(List<Product> productList){
-        this.productList= productList;
-    }
+//    public List<Product> getProductList(){
+//        return productList;
+//    }
+//
+//    public void setProductList(List<Product> productList){
+//        this.productList= productList;
+//    }
 
     @Override
     public String toString() {
@@ -221,5 +224,21 @@ public class User implements UserDetails {
 
     public void setIsActive(Boolean isActive){
         this.isActive = isActive;
+    }
+
+    public Cart getShoppingCart() {
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(Cart cart) {
+        this.shoppingCart = cart;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

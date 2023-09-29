@@ -34,7 +34,7 @@ public class Post {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @NotNull(message = "user is required")
-    @JsonBackReference
+    @JsonBackReference(value = "user-posts")
     private User user;
 
     public Long getId() {

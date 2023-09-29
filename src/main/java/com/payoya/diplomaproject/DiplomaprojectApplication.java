@@ -17,4 +17,6 @@ public class DiplomaprojectApplication {
     //TODO write tests
     //TODO Create Entities for marketPlace project
     //TODO create email confirmation
+    //TODO implement cart in project
+
 }
