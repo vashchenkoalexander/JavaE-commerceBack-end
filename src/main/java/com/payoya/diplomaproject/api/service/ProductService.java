@@ -34,18 +34,26 @@ public class ProductService {
         return productRepository.save(product);
     }
 
-//    @PostAuthorize("returnObject.user.username == principal.username")
-//    public Product saveNewProductWithUser(Long id, Product product){
-//        product.setUser(userService.findUserById(id));
-//        //product.setCartItems(null);
-//        return saveNewProduct(product);
-//    }
-
-
     public void deleteProductById(Long id){
         productRepository.deleteById(id);
     }
 
+    /*
+    Find all Products by Tags with contains this tag
+     */
+    public List<Product> findAllByTags(String tags){
+        return productRepository.findAllByTagsContainsIgnoreCase(tags);
+    }
 
+
+
+
+
+    //    @PostAuthorize("returnObject.user.username == principal.username")
+    //    public Product saveNewProductWithUser(Long id, Product product){
+    //        product.setUser(userService.findUserById(id));
+    //        //product.setCartItems(null);
+    //        return saveNewProduct(product);
+    //    }
 
 }

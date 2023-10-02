@@ -1,7 +1,10 @@
 package com.payoya.diplomaproject.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "order_items")
@@ -20,6 +23,19 @@ public class OrderItem {
     @JoinColumn(name = "product_id")
     @JsonBackReference(value = "orderItems-product")
     private Product product;
+
+    @Column(name = "title")
+    @NotNull(message = "title must be present")
+    private String title;
+
+    @Column(name = "body_title")
+    @NotNull(message = "bodyTitle must be present")
+    @Size(max = 20000)
+    private String bodyTitle;
+
+    @Column(name = "tags")
+    @NotNull(message = "tags must be present")
+    private String tags;
 
     private Integer quantity;
 
@@ -64,5 +80,29 @@ public class OrderItem {
 
     public void setItemPrice(Double itemPrice) {
         this.itemPrice = itemPrice;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getBodyTitle() {
+        return bodyTitle;
+    }
+
+    public void setBodyTitle(String bodyTitle) {
+        this.bodyTitle = bodyTitle;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }

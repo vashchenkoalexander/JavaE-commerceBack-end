@@ -3,6 +3,7 @@ package com.payoya.diplomaproject.api.controller;
 import com.payoya.diplomaproject.api.entity.Product;
 import com.payoya.diplomaproject.api.service.ProductService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,6 +38,9 @@ public class ProductRestController {
         productService.deleteProductById(id);
     }
 
-
+    @GetMapping("/all-tags")
+    public List<Product> firdAllByTags(@RequestParam String tags){
+        return productService.findAllByTags(tags);
+    }
 
 }

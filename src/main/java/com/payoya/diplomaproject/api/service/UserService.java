@@ -1,6 +1,5 @@
 package com.payoya.diplomaproject.api.service;
 
-import com.payoya.diplomaproject.api.entity.Cart;
 import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.enums.Role;
 import com.payoya.diplomaproject.api.exceptions.UsernameExistException;
@@ -68,7 +67,7 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepository.save(user); //saving user entity to db with repository
-        cartService.createNew(new Cart(), user); //creating new cart and binding with user which was just created
+        cartService.createNew(user); //creating new cart and binding with user which was just created
         return user;
     }
 

@@ -32,7 +32,7 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "stock_Quantity")
+    @Column(name = "stock_quantity")
     private Integer stockQuantity;
 
     @Column(name = "image")
@@ -78,14 +78,6 @@ public class Product {
         this.image=image;
     }
 
-//    public User getUser(){
-//        return this.user;
-//    }
-//
-//    public void setUser(User user){
-//        this.user = user;
-//    }
-
     public void setTags(String tags) {
         this.tags = tags;
     }
@@ -125,12 +117,4 @@ public class Product {
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
-
-//    public List<CartItem> getCartItems() {
-//        return cartItems;
-//    }
-//
-//    public void setCartItems(List<CartItem> cartItems) {
-//        this.cartItems = cartItems;
-//    }
 }
