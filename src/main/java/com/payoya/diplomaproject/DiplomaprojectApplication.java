@@ -18,5 +18,6 @@ public class DiplomaprojectApplication {
     //TODO Create Entities for marketPlace project
     //TODO create email confirmation
     //TODO implement cart in project
+    //TODO Create checkout for items order in cart
 
 }

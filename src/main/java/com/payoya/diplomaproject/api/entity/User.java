@@ -65,6 +65,7 @@ public class User implements UserDetails {
     private String activationToken;
 
     @OneToMany
+    //@JsonManagedReference(value = "orders-user")
     private List<Order> orders;
 
     private Boolean isActive = false;
