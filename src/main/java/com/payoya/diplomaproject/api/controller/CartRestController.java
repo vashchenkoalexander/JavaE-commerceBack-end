@@ -21,4 +21,9 @@ public class CartRestController {
         return cartService.saveItemToCart(userId, productId);
     }
 
+    @DeleteMapping("/deleteItem")
+    public Cart deleteItemFromCart(@RequestParam Long userId, @RequestParam Long productId){
+        return cartService.deleteItemFromCart(userId, productId);
+    }
+
 }

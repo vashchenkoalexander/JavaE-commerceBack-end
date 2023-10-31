@@ -11,6 +11,8 @@ import com.payoya.diplomaproject.api.repository.ICartRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CartService {
 
@@ -43,6 +45,12 @@ public class CartService {
             throw new BadQuantityOfProductException("This quantity of products bigger than we have. We have: " + product.getStockQuantity());
         }
 
+        if(product.getUser() == null){
+            System.out.println("You buying product created by system it's okey");
+        } else if (product.getUser().equals(user)) {
+            throw new IllegalStateException("Why do you want to add your items for selling in your cart?");
+        }
+
         orderItem.setProduct(product);
         orderItem.setItemPrice(product.getPrice());
         orderItem.setQuantity(1);
@@ -58,6 +66,28 @@ public class CartService {
 
         return cart;
 
+    }
+
+    public Cart deleteItemFromCart(Long userId, Long productId){
+
+        User user = userService.findUserById(userId);
+        Product product = productService.findProductById(productId);
+        Cart userCart = user.getShoppingCart();
+        List<OrderItem> list = userCart.getOrderItems();
+
+        if(!userCart.getOrderItems().isEmpty()){
+            for(OrderItem item : list){
+                if (item.getProduct().equals(product)){
+                    userCart.getOrderItems().remove(item);
+                    cartRepository.save(userCart);
+                    return userCart;
+                }
+            }
+        }else {
+            throw new IllegalStateException("This " + product + " does not exist in this cart");
+        }
+
+        return userCart;
 
     }
 

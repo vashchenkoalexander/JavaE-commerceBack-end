@@ -66,11 +66,10 @@ public class User implements UserDetails {
     private String activationToken;
 
     @OneToMany
-    //@JsonManagedReference(value = "orders-user")
     private List<Order> orders;
 
     @OneToMany(mappedBy = "user")
-    @JsonBackReference("user-listProducts")
+    @JsonManagedReference("user-listProducts")
     private List<Product> productList;
 
     private Boolean isActive = false;

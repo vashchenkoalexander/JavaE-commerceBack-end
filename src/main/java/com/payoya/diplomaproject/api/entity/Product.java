@@ -50,8 +50,10 @@ public class Product {
     @JsonManagedReference(value = "orderItems-product")
     private List<OrderItem> orderItems;
 
-    @ManyToOne
-    @JsonManagedReference("user-listProducts")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @JsonBackReference("user-listProducts")
+    @Nullable
     private User user;
 
     public Long getId() {
