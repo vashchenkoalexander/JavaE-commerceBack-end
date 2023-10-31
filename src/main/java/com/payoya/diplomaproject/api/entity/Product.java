@@ -50,6 +50,10 @@ public class Product {
     @JsonManagedReference(value = "orderItems-product")
     private List<OrderItem> orderItems;
 
+    @ManyToOne
+    @JsonManagedReference("user-listProducts")
+    private User user;
+
     public Long getId() {
         return id;
     }
@@ -116,5 +120,13 @@ public class Product {
 
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
+    }
+
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public User getUser(){
+        return this.user;
     }
 }

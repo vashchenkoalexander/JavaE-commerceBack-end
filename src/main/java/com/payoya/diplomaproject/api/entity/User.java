@@ -1,5 +1,6 @@
 package com.payoya.diplomaproject.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.payoya.diplomaproject.api.enums.Role;
 import jakarta.persistence.*;
@@ -67,6 +68,10 @@ public class User implements UserDetails {
     @OneToMany
     //@JsonManagedReference(value = "orders-user")
     private List<Order> orders;
+
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference("user-listProducts")
+    private List<Product> productList;
 
     private Boolean isActive = false;
 
@@ -241,5 +246,13 @@ public class User implements UserDetails {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 }

@@ -120,7 +120,7 @@ class UserServiceTest {
         List<User> mockUsersList = new ArrayList<>();
 
         //mock lists of users in db
-        mockUsersList.add(new User(1L, "first_user", "pass", "Name", "Surr_name", "1234@gmail.com"));
+        mockUsersList.add(new User(1L, "ffd", "pass", "Name", "Surr_name", "1234@gmail.com"));
         mockUsersList.add(new User(2L,"igrick", "pass", "Igor", "Babenko", "igrick@gmail.com"));
         mockUsersList.add(new User(3L,"rom4ik", "pass", "Roma", "Karpenok", "rom4ik@gmail.com"));
         mockUsersList.add(new User(4L,"deniSka", "pass", "Denis", "Shvec", "deniSka@gmail.com"));

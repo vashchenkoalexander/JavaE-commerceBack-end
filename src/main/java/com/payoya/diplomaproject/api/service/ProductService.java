@@ -45,15 +45,11 @@ public class ProductService {
         return productRepository.findAllByTagsContainsIgnoreCase(tags);
     }
 
-
-
-
-
-    //    @PostAuthorize("returnObject.user.username == principal.username")
-    //    public Product saveNewProductWithUser(Long id, Product product){
-    //        product.setUser(userService.findUserById(id));
-    //        //product.setCartItems(null);
-    //        return saveNewProduct(product);
-    //    }
+        @PostAuthorize("returnObject.user.username == principal.username")
+        public Product saveNewProductWithUser(Long id, Product product){
+            product.setUser(userService.findUserById(id));
+            //product.setCartItems(null);
+            return saveNewProduct(product);
+        }
 
 }

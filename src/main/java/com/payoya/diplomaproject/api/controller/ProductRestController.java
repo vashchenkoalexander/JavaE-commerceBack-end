@@ -28,10 +28,10 @@ public class ProductRestController {
         return productService.saveNewProduct(product);
     }
 
-//    @PostMapping("/new/{id}")
-//    public Product saveNewProductWithUser(@RequestBody @Valid Product product, @PathVariable Long id){
-//        return productService.saveNewProductWithUser(id, product);
-//    }
+    @PostMapping("/new/{id}")
+    public Product saveNewProductWithUser(@RequestBody @Valid Product product, @PathVariable Long id){
+        return productService.saveNewProductWithUser(id, product);
+    }
 
     @DeleteMapping("/delete/{id}")
     public void deleteProductById(@PathVariable Long id){
