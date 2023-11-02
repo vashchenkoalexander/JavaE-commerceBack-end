@@ -65,6 +65,4 @@ public enum Role  {
         return permissions;
     }
 
-//TODO Create for this enum not only roles but also authorities
-
 }

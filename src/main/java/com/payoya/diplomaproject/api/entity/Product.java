@@ -2,6 +2,7 @@ package com.payoya.diplomaproject.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mongodb.client.model.vault.RewrapManyDataKeyOptions;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -11,6 +12,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "products")
@@ -49,6 +51,12 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @JsonManagedReference(value = "orderItems-product")
     private List<OrderItem> orderItems;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @JsonManagedReference(value = "reviewList-product")
+    private List<Review> reviews;
+
+    private Double medianRating;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -130,5 +138,31 @@ public class Product {
 
     public User getUser(){
         return this.user;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Double getMedianRating() {
+        return medianRating;
+    }
+
+    public void setMedianRating(Double medianRating) {
+        this.medianRating = medianRating;
+    }
+
+    public void calculateMedianRating(){
+        List<Integer> ratingValues = reviews.stream()
+                .map(review -> review.getRating())
+                .sorted().toList();
+
+        medianRating = ratingValues.stream().mapToInt(a -> a).summaryStatistics().getAverage();
+
+        int size = ratingValues.size();
     }
 }
