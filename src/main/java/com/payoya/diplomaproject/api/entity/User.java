@@ -128,9 +128,12 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(getRole().toString().split(","))
-                .map(SimpleGrantedAuthority::new)
-                .toList();
+
+        return getRole().getAuthorities();
+
+//        return Arrays.stream(getRole().toString().split(","))
+//                .map(SimpleGrantedAuthority::new)
+//                .toList();
     }
 
     public Role getRole() {

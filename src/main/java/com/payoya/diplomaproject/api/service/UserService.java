@@ -71,7 +71,8 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    @PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MODERATOR')")
+    //@PreAuthorize("hasAnyAuthority('ADMIN', 'USER', 'MODERATOR')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER', 'MODERATOR')")
     public List<User> findAllUsers(){
         List<User> usersList = userRepository.findAll();
 
@@ -81,7 +82,7 @@ public class UserService implements UserDetailsService {
     /*
     this method return data only when user have this id login and pass or Authority's ADMIN
      */
-    @PostAuthorize("returnObject.username == principal.username || hasAuthority('ADMIN')")
+    @PostAuthorize("returnObject.username == principal.username || hasAuthority('admin:read')")
     //@PreAuthorize("hasAnyAuthority('USER','ADMIN')")
     public User findUserById(Long id) {
         return userRepository.findById(id).orElse(new User());

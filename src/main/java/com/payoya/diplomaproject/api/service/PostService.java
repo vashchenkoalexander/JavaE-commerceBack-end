@@ -22,7 +22,7 @@ public class PostService {
         this.userService = userService;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasAuthority('admin:read')")
     public List<Post> findAllPosts(){
         return postRepository.findAll();
     }
