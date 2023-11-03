@@ -21,9 +21,9 @@ public class OrderRestContoller {
         return orderService.saveOrder(id);
     }
 
-    @GetMapping("/all")
-    public List<Order> findAll(){
-        return orderService.getAll();
+    @GetMapping("/all{userId}")
+    public List<Order> findAllOrdersByUserId(@PathVariable Long userId){
+        return orderService.getAllOrdersByUserId(userId);
     }
 
 }

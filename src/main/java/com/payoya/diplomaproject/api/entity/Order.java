@@ -17,7 +17,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    //@JsonBackReference(value = "orders-user")
+    @JsonBackReference(value = "orders-user")
     private User user;
 
     private LocalDateTime orderDate;

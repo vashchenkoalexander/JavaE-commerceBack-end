@@ -66,11 +66,16 @@ public class User implements UserDetails {
     private String activationToken;
 
     @OneToMany
+    @JsonManagedReference(value = "orders-user")
     private List<Order> orders;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference("user-listProducts")
     private List<Product> productList;
+
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value = "user-shipping_addresses")
+    private List<ShippingAddress> shippingAddressList;
 
     private Boolean isActive = false;
 
@@ -256,5 +261,13 @@ public class User implements UserDetails {
 
     public void setProductList(List<Product> productList) {
         this.productList = productList;
+    }
+
+    public List<ShippingAddress> getShippingAddressList() {
+        return shippingAddressList;
+    }
+
+    public void setShippingAddressList(List<ShippingAddress> shippingAddressList) {
+        this.shippingAddressList = shippingAddressList;
     }
 }
