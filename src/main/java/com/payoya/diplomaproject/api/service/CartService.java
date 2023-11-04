@@ -7,6 +7,8 @@ import com.payoya.diplomaproject.api.entity.OrderItem;
 import com.payoya.diplomaproject.api.entity.Product;
 import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.exceptions.BadQuantityOfProductException;
+import com.payoya.diplomaproject.api.exceptions.ProductIsNullException;
+import com.payoya.diplomaproject.api.exceptions.UserHisSelfAddingToCartProductException;
 import com.payoya.diplomaproject.api.repository.ICartRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -38,8 +40,11 @@ public class CartService {
     public Cart saveItemToCart(Long userId, Long productId){
         User user = userService.findUserById(userId);
         Product product = productService.findProductById(productId);
-
         OrderItem orderItem = new OrderItem();
+
+        if(product == null){
+            throw new ProductIsNullException("You trying to buy product which doesn't exist in system");
+        }
 
         if(product.getStockQuantity()-1 < 0 || product.getStockQuantity() < 0){
             throw new BadQuantityOfProductException("This quantity of products bigger than we have. We have: " + product.getStockQuantity());
@@ -48,7 +53,7 @@ public class CartService {
         if(product.getUser() == null){
             System.out.println("You buying product created by system it's okey");
         } else if (product.getUser().equals(user)) {
-            throw new IllegalStateException("Why do you want to add your items for selling in your cart?");
+            throw new UserHisSelfAddingToCartProductException("Why do you want to add your items for selling in your cart?");
         }
 
         orderItem.setProduct(product);
