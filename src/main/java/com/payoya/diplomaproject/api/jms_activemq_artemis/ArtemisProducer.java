@@ -1,5 +1,6 @@
 package com.payoya.diplomaproject.api.jms_activemq_artemis;
 
+import com.payoya.diplomaproject.api.entity.Order;
 import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.mongoDB.BaseEntity;
 import com.payoya.diplomaproject.api.mongoDB.BaseEntityService;
@@ -28,6 +29,12 @@ public class ArtemisProducer {
 
     public void send(String msg){
         jmsTemplate.convertAndSend(destinationQueue, msg);
+    }
+
+    public void sendOrderedItems(Order order){
+        BaseEntity entity = new BaseEntity("order created", order);
+        jmsTemplate.convertAndSend(destinationQueue, order.getId() + " =order");
+        baseEntityService.saveEntity(entity);
     }
 
     public void sendMessage(User user){

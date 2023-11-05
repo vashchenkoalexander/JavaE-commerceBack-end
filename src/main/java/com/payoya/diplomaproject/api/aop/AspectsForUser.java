@@ -1,6 +1,7 @@
 package com.payoya.diplomaproject.api.aop;
 
 import com.payoya.diplomaproject.api.email.MailSenderService;
+import com.payoya.diplomaproject.api.entity.Order;
 import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.jms_activemq_artemis.ArtemisProducer;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -51,7 +52,14 @@ public class AspectsForUser {
         producer.sendMessage(user); // work with ActiveMQ Artemis
         //mailSender.sendEmail(user.getEmailAddress(), "Welcome to party",  "Dear user: " + user.getUsername() + ". WelcomeMaDearFriend");
         mailSender.sendActivationEmail(user.getEmailAddress(), user.getActivationToken());
+        //mailSender.sendEmail(user.getEmailAddress(), "activation", "12345");
         System.err.println("user's username is: " + user.getUsername() + " " + LocalDateTime.now());
+    }
+
+    @AfterReturning(pointcut = "execution(* com.payoya.diplomaproject.api.repository.IOrderRepository.save(..))", returning = "order")
+    public void setOrderedItems(Order order){
+        //producer.sendOrderedItems(order);
+        mailSender.sendOrdertoEmail(order.getUser().getEmailAddress(), order);
     }
 
 }

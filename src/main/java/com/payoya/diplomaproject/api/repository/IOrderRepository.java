@@ -11,4 +11,8 @@ public interface IOrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findAllByUserId(Long userId);
 
+    Order findAllById(Long orderId);
+
+    //todo create findOrder from db by some option and took all their data
+
 }

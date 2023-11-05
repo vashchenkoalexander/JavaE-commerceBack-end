@@ -59,7 +59,8 @@ public class OrderService {
         user.getShoppingCart().getOrderItems().clear();
 
         return orderRepository.save(order);
-        //TODO create a way to return order with orderItems in this method
+
+        //TODO create a way to return order with orderItems in this method. How to return objects data from db after save
     }
 
     public List<Order> getAllOrdersByUserId(Long userId){

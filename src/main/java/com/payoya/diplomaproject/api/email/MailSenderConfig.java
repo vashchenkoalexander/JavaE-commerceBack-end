@@ -1,6 +1,7 @@
 package com.payoya.diplomaproject.api.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -17,6 +18,12 @@ import java.util.Properties;
 @Profile("prod")
 public class MailSenderConfig {
 
+    @Value("${spring.mail.password}")
+    private String password;
+
+    @Value("${spring.mail.username}")
+    private String email;
+
     //TODO change email sender for noreplypayoyaEA@gmail.com
 
     @Bean
@@ -25,11 +32,8 @@ public class MailSenderConfig {
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
 
-        mailSender.setUsername("asdw3a@gmail.com");
-        mailSender.setPassword("lsqsnvqclemvpxqt");
-
-        //spring.mail.username=asdw3a@gmail.com
-        //spring.mail.password=lsqsnvqclemvpxqt
+        mailSender.setUsername(email);
+        mailSender.setPassword(password);
 
         Properties props = mailSender.getJavaMailProperties();
 //        props.put("mail.transport.protocol", "smtp"); // for debug purposes
@@ -39,26 +43,5 @@ public class MailSenderConfig {
 
         return mailSender;
     }
-
-
-
-
-//    @Bean
-//    public JavaMailSender getJavaMailSender() {
-//        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-//        mailSender.setHost("smtp.gmail.com");
-//        mailSender.setPort(587);
-//
-//        mailSender.setUsername("my.gmail@gmail.com");
-//        mailSender.setPassword("password");
-//
-//        Properties props = mailSender.getJavaMailProperties();
-//        props.put("mail.transport.protocol", "smtp");
-//        props.put("mail.smtp.auth", "true");
-//        props.put("mail.smtp.starttls.enable", "true");
-//        props.put("mail.debug", "true");
-//
-//        return mailSender;
-//    }
 
 }

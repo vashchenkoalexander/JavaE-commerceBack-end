@@ -1,5 +1,6 @@
 package com.payoya.diplomaproject.api.email;
 
+import com.payoya.diplomaproject.api.entity.Order;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class MailSenderService {
     @Async
     public void sendActivationEmail(String toEmail, String token) {
         MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = null;
+        MimeMessageHelper helper;
         try {
             helper = new MimeMessageHelper(message, true);
             helper.setTo(toEmail);
@@ -54,11 +55,22 @@ public class MailSenderService {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
         mailSender.send(message);
+    }
 
-
-
+    @Async
+    public void sendOrdertoEmail(String toEmail, Order order){
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper;
+        try {
+            helper = new MimeMessageHelper(message, true);
+            helper.setTo(toEmail);
+            helper.setSubject("Order Activity");
+            message.setText("Hello, your order is" + order.getOrderItems());
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        mailSender.send(message);
     }
 
 }
