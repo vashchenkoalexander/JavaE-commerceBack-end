@@ -24,13 +24,19 @@ public class MailSenderConfig {
     @Value("${spring.mail.username}")
     private String email;
 
+    @Value("${spring.mail.host}")
+    private String host;
+
+    @Value("${spring.mail.port}")
+    private int port;
+
     //TODO change email sender for noreplypayoyaEA@gmail.com
 
     @Bean
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        mailSender.setHost(host);
+        mailSender.setPort(port);
 
         mailSender.setUsername(email);
         mailSender.setPassword(password);

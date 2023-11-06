@@ -16,9 +16,7 @@ import java.util.List;
 @Service
 public class OrderService {
 
-
     private IOrderRepository orderRepository;
-
     private UserService userService;
 
     public OrderService(IOrderRepository orderRepository, UserService userService) {
@@ -46,21 +44,23 @@ public class OrderService {
 
         List<OrderItem> orderItems = user.getShoppingCart().getOrderItems();
         order.setUser(user);
-        order.setOrderItems(new ArrayList<>(orderItems));
-        order.getOrderItems().addAll(orderItems);
-        order.setOrderItems(new ArrayList<>());
+        order.setOrderItems(new ArrayList<>(orderItems)); // This line creates a copy of the orderItems list
         order.setOrderDate(LocalDateTime.now().withNano(0));
         order.setOrderStatus("Shipping to " + shippingAddress.getCity() + ". With postCode "
                 + shippingAddress.getPostcode() + ". Country: " + shippingAddress.getCountry());
         order.setTotalAmount(orderItems.stream().map(item -> item.getItemPrice()).reduce( 0.0, Double::sum));
+
+        // Update the order reference for each order item
         for(OrderItem orderItem : orderItems){
             orderItem.setOrder(order);
         }
+
+        // Clear the shopping cart
         user.getShoppingCart().getOrderItems().clear();
 
-        return orderRepository.save(order);
+        orderRepository.save(order);
 
-        //TODO create a way to return order with orderItems in this method. How to return objects data from db after save
+        return order;
     }
 
     public List<Order> getAllOrdersByUserId(Long userId){

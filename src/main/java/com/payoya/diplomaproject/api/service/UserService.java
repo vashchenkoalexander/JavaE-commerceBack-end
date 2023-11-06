@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -65,6 +66,7 @@ public class UserService implements UserDetailsService {
         user.setIsActive(true);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
 
         userRepository.save(user); //saving user entity to db with repository
         cartService.createNew(user); //creating new cart and binding with user which was just created
@@ -158,9 +160,27 @@ public class UserService implements UserDetailsService {
             // Activation successful
             return true;
         }
-
-
         return false; // Invalid or expired token
+    }
+
+    //@PreAuthorize("principal.username == userService.findUserById(#userId).username")
+    @PostAuthorize("returnObject.username == principal.username")
+    public User changePasswordByUserId(Long userId, String password){
+        User user = userRepository.findById(userId).orElse(null);
+        String resultPass = password.replace("\r\n", "");
+
+        if(user == null){
+            throw new IllegalStateException("this userID: "+ userId + " don't belong to any one");
+        }
+
+        user.setPassword(passwordEncoder.encode(resultPass));
+
+        if(passwordEncoder.matches(resultPass, user.getPassword())){
+            System.err.println("this: " + password + " is correct");
+            return userRepository.save(user);
+        } else {
+            throw new IllegalStateException("passwords don't equals you cant log in");
+        }
     }
 
 }
