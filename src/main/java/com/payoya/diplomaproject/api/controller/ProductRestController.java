@@ -3,7 +3,6 @@ package com.payoya.diplomaproject.api.controller;
 import com.payoya.diplomaproject.api.entity.Product;
 import com.payoya.diplomaproject.api.service.ProductService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

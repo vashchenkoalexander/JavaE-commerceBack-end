@@ -1,8 +1,6 @@
 package com.payoya.diplomaproject.api.controller;
 
-import com.payoya.diplomaproject.api.entity.Product;
 import com.payoya.diplomaproject.api.entity.Review;
-import com.payoya.diplomaproject.api.repository.IProductRepository;
 import com.payoya.diplomaproject.api.service.ReviewService;
 import org.springframework.web.bind.annotation.*;
 

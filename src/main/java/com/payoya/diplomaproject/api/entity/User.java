@@ -1,6 +1,5 @@
 package com.payoya.diplomaproject.api.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.payoya.diplomaproject.api.enums.Role;
 import jakarta.persistence.*;
@@ -8,7 +7,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
@@ -133,12 +131,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
         return getRole().getAuthorities();
-
-//        return Arrays.stream(getRole().toString().split(","))
-//                .map(SimpleGrantedAuthority::new)
-//                .toList();
     }
 
     public Role getRole() {
@@ -200,14 +193,6 @@ public class User implements UserDetails {
     public void setEmailAddress(String emailAddress){
         this.emailAddress = emailAddress;
     }
-
-//    public List<Product> getProductList(){
-//        return productList;
-//    }
-//
-//    public void setProductList(List<Product> productList){
-//        this.productList= productList;
-//    }
 
     @Override
     public String toString() {

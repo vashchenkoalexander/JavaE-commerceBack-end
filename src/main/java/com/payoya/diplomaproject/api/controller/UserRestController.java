@@ -3,21 +3,16 @@ package com.payoya.diplomaproject.api.controller;
 import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -71,7 +66,7 @@ public class UserRestController {
      with fields page and size also in RequestParam property
      */
     @GetMapping("/paged")
-    public List<User> findAllUsersByFirstName(@RequestParam String firstName, @PageableDefault(page = 0, size = 20) Pageable pageable){
+    public List<User> findAllUsersByFirstName(@RequestParam String firstName, @PageableDefault(size = 20) Pageable pageable){
         return userService.findAllUsersByFirstName(firstName, pageable);
     }
 

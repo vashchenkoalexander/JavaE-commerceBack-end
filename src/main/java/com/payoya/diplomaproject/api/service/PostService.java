@@ -1,7 +1,6 @@
 package com.payoya.diplomaproject.api.service;
 
 import com.payoya.diplomaproject.api.entity.Post;
-import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.repository.IPostRepository;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
