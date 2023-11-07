@@ -7,7 +7,6 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -19,7 +18,6 @@ import java.util.Map;
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
-
 
     /*
     this method receive bunch of parameters in invalid post mapping and create a response to 400 code message
@@ -44,13 +42,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UsernameExistException.class)
     public ResponseEntity<Object> handleResourceNotFoundException(UsernameExistException ex) {
 
-        Map<String, Object> responseBody = new LinkedHashMap<>();
-        responseBody.put("timestamp", new Date());
-        responseBody.put("status" , HttpStatus.BAD_REQUEST.value());
-
-        responseBody.put("error", ex.getMessage());
-
-        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(getResponseBody(ex), HttpStatus.BAD_REQUEST);
     }
 
 
@@ -87,12 +79,43 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(responseBody, headers, status);
     }
 
-    //TODO : Change this exception handler for more convenient way
+
     @ExceptionHandler (ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    protected ResponseEntity<Object> handleConstraintViolationException(
-            ConstraintViolationException e) {
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    protected ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException e) {
+        return new ResponseEntity<>(getResponseBody(e), HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler(ZeroItemOrderException.class)
+    protected ResponseEntity<Object> handleZeroItemException(ZeroItemOrderException ex){
+
+        return new ResponseEntity<>(getResponseBody(ex), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ZeroShippingAddressesException.class)
+    protected ResponseEntity<Object> handleZeroShippingAddressesException(ZeroShippingAddressesException ex){
+        return new ResponseEntity<>(getResponseBody(ex), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ProductIsNullException.class)
+    protected ResponseEntity<Object> handleProductIsNullException(ProductIsNullException exception){
+        return new ResponseEntity<>(getResponseBody(exception), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UserHisSelfAddingToCartProductException.class)
+    protected ResponseEntity<Object> handleUserHisSelfAddingToCartProductException(UserHisSelfAddingToCartProductException exception){
+        return new ResponseEntity<>(getResponseBody(exception), HttpStatus.BAD_REQUEST);
+    }
+
+    private Map<String, Object> getResponseBody(RuntimeException exception){
+
+        Map<String, Object> responseBody = new LinkedHashMap<>();
+        responseBody.put("timestamp", new Date());
+        responseBody.put("status" , HttpStatus.BAD_REQUEST.value());
+
+        responseBody.put("error", exception.getMessage());
+
+        return responseBody;
     }
 
 }

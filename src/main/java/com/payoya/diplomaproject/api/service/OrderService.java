@@ -4,6 +4,8 @@ import com.payoya.diplomaproject.api.entity.Order;
 import com.payoya.diplomaproject.api.entity.OrderItem;
 import com.payoya.diplomaproject.api.entity.ShippingAddress;
 import com.payoya.diplomaproject.api.entity.User;
+import com.payoya.diplomaproject.api.exceptions.ZeroItemOrderException;
+import com.payoya.diplomaproject.api.exceptions.ZeroShippingAddressesException;
 import com.payoya.diplomaproject.api.repository.IOrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +16,7 @@ import java.util.List;
 @Service
 public class OrderService {
 
-
     private IOrderRepository orderRepository;
-
     private UserService userService;
 
     public OrderService(IOrderRepository orderRepository, UserService userService) {
@@ -29,28 +29,38 @@ public class OrderService {
 
         Order order = new Order();
         User user = userService.findUserById(userId);
+        List<ShippingAddress> shippingAddressList = user.getShippingAddressList();
+        ShippingAddress shippingAddress;
 
         if(user.getShoppingCart().getOrderItems().isEmpty()){
-            throw new IllegalStateException("You can't checkout 0 item from your cart");
+            throw new ZeroItemOrderException("You can't checkout 0 item from your cart " + user.getUsername());
         }
 
-        ShippingAddress shippingAddress = user.getShippingAddressList().get(0);
+        if(shippingAddressList.isEmpty()){
+            throw new ZeroShippingAddressesException("You can't checkout because you haven't any address for shipping");
+        } else {
+            shippingAddress = shippingAddressList.get(0);
+        }
 
         List<OrderItem> orderItems = user.getShoppingCart().getOrderItems();
         order.setUser(user);
-        order.setOrderItems(new ArrayList<>(orderItems));
-        order.getOrderItems().addAll(orderItems);
-        order.setOrderItems(new ArrayList<>());
+        order.setOrderItems(new ArrayList<>(orderItems)); // This line creates a copy of the orderItems list
         order.setOrderDate(LocalDateTime.now().withNano(0));
         order.setOrderStatus("Shipping to " + shippingAddress.getCity() + ". With postCode "
                 + shippingAddress.getPostcode() + ". Country: " + shippingAddress.getCountry());
         order.setTotalAmount(orderItems.stream().map(item -> item.getItemPrice()).reduce( 0.0, Double::sum));
+
+        // Update the order reference for each order item
         for(OrderItem orderItem : orderItems){
             orderItem.setOrder(order);
         }
+
+        // Clear the shopping cart
         user.getShoppingCart().getOrderItems().clear();
 
-        return orderRepository.save(order);
+        orderRepository.save(order);
+
+        return order;
     }
 
     public List<Order> getAllOrdersByUserId(Long userId){

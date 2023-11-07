@@ -105,4 +105,8 @@ public class OrderItem {
     public void setTags(String tags) {
         this.tags = tags;
     }
+
+    public Long getProductId(){
+        return this.product.getId();
+    }
 }
