@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 
 @Component
@@ -47,10 +48,11 @@ public class MailSenderService {
         try {
             helper = new MimeMessageHelper(message, true);
             helper.setTo(toEmail);
+            helper.setFrom("noreplypayoyaEA@gmail.com", "1234");
             helper.setSubject("Account Activation");
             message.setText("Hello,\n\nPlease click on the following link to activate your account:\n"
                     + "https://localhost:8443/api/v1/user/activate?token=" + token);
-        } catch (MessagingException e) {
+        } catch (MessagingException | UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
         mailSender.send(message);
