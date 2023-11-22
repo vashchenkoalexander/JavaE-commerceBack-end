@@ -48,8 +48,10 @@ public class ProductRestController {
     }
 
     @GetMapping("/all_by_properties")
-    public List<Product> findAllByContainingPropertyEverywhere(@RequestParam String paramName){
-        return productService.findAllByContainingPropertyEverywhere(paramName);
+    public List<Product> findAllByContainingPropertyEverywhere(@RequestParam String paramName,
+                                                               @RequestParam Double minPrice,
+                                                               @RequestParam Double maxPrice){
+        return productService.findAllByContainingPropertyEverywhere(paramName, minPrice, maxPrice);
     }
 
 }

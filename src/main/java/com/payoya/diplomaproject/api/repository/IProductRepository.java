@@ -13,7 +13,11 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findAllByTagsContainsIgnoreCase(String tags);
 
-    List<Product> findAllByTagsContainsIgnoreCaseOrBodyTitleContainingIgnoreCaseOrTitleContainingIgnoreCaseOrderByPrice
-            (@NotNull(message = "tags must be present") String tags, @NotNull(message = "bodyTitle must be present") @Size(max = 20000) String bodyTitle, @NotNull(message = "title must be present") String title);
+    List<Product> findAllByTagsContainsIgnoreCaseOrBodyTitleContainingIgnoreCaseOrTitleContainingIgnoreCaseAndPriceBetweenOrderByPrice
+            (@NotNull(message = "tags must be present") String tags,
+             @NotNull(message = "bodyTitle must be present") @Size(max = 20000) String bodyTitle,
+             @NotNull(message = "title must be present") String title,
+             Double priceMin,
+             Double priceMax);
 
 }

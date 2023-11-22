@@ -58,10 +58,10 @@ public class ProductService {
         return saveNewProduct(product);
     }
 
-    public List<Product> findAllByContainingPropertyEverywhere(String propertyName){
+    public List<Product> findAllByContainingPropertyEverywhere(String propertyName, Double priceMin, Double priceMax){
         return productRepository.
-                findAllByTagsContainsIgnoreCaseOrBodyTitleContainingIgnoreCaseOrTitleContainingIgnoreCaseOrderByPrice
-                        (propertyName, propertyName, propertyName);
+                findAllByTagsContainsIgnoreCaseOrBodyTitleContainingIgnoreCaseOrTitleContainingIgnoreCaseAndPriceBetweenOrderByPrice
+                        (propertyName, propertyName, propertyName, priceMin, priceMax);
     }
 
 }
