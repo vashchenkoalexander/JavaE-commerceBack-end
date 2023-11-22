@@ -1,6 +1,7 @@
 package com.payoya.diplomaproject.api.service;
 
 import com.payoya.diplomaproject.api.entity.Product;
+import com.payoya.diplomaproject.api.entity.ProductFilter;
 import com.payoya.diplomaproject.api.repository.IProductRepository;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,15 @@ public class ProductService {
         return productRepository.
                 findAllByTagsContainsIgnoreCaseOrBodyTitleContainingIgnoreCaseOrTitleContainingIgnoreCaseAndPriceBetweenOrderByPrice
                         (propertyName, propertyName, propertyName, priceMin, priceMax);
+    }
+
+    public List<Product> findAllByFilter(ProductFilter productFilter){
+        return productRepository.
+        findAllByTagsContainsIgnoreCaseOrBodyTitleContainingIgnoreCaseOrTitleContainingIgnoreCaseAndPriceBetweenOrderByPrice
+                (productFilter.getTitleContains(),
+                        productFilter.getTitleContains(),
+                        productFilter.getTitleContains(),
+                        productFilter.getMixPrice(), productFilter.getMaxPrice());
     }
 
 }

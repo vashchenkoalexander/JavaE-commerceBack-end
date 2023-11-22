@@ -1,6 +1,7 @@
 package com.payoya.diplomaproject.api.controller;
 
 import com.payoya.diplomaproject.api.entity.Product;
+import com.payoya.diplomaproject.api.entity.ProductFilter;
 import com.payoya.diplomaproject.api.service.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,11 @@ public class ProductRestController {
                                                                @RequestParam Double minPrice,
                                                                @RequestParam Double maxPrice){
         return productService.findAllByContainingPropertyEverywhere(paramName, minPrice, maxPrice);
+    }
+
+    @GetMapping("/all_by_filter")
+    public List<Product> findAllByFilter(@RequestBody ProductFilter productFilter){
+        return productService.findAllByFilter(productFilter);
     }
 
 }
