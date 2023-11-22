@@ -1,6 +1,5 @@
 package com.payoya.diplomaproject.api.jms_activemq_artemis;
 
-import org.springframework.cglib.core.Local;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;

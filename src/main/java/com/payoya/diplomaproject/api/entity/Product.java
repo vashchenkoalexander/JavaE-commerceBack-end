@@ -2,17 +2,13 @@ package com.payoya.diplomaproject.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.mongodb.client.model.vault.RewrapManyDataKeyOptions;
-import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "products")
@@ -160,9 +156,6 @@ public class Product {
         List<Integer> ratingValues = reviews.stream()
                 .map(review -> review.getRating())
                 .sorted().toList();
-
         medianRating = ratingValues.stream().mapToInt(a -> a).summaryStatistics().getAverage();
-
-        int size = ratingValues.size();
     }
 }

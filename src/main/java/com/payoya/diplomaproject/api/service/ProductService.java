@@ -1,6 +1,7 @@
 package com.payoya.diplomaproject.api.service;
 
 import com.payoya.diplomaproject.api.entity.Product;
+import com.payoya.diplomaproject.api.entity.ProductFilter;
 import com.payoya.diplomaproject.api.repository.IProductRepository;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,13 @@ public class ProductService {
         return productRepository.save(product);
     }
 
+    public List<Product> saveNewListProducts(List<Product> products){
+        for(Product product : products){
+            product.setDateofCreate(LocalDateTime.now().withNano(0));
+        }
+        return productRepository.saveAll(products);
+    }
+
     public void deleteProductById(Long id){
         productRepository.deleteById(id);
     }
@@ -45,11 +53,25 @@ public class ProductService {
         return productRepository.findAllByTagsContainsIgnoreCase(tags);
     }
 
-        @PostAuthorize("returnObject.user.username == principal.username")
-        public Product saveNewProductWithUser(Long id, Product product){
-            product.setUser(userService.findUserById(id));
-            //product.setCartItems(null);
-            return saveNewProduct(product);
-        }
+    @PostAuthorize("returnObject.user.username == principal.username")
+    public Product saveNewProductWithUser(Long id, Product product){
+        product.setUser(userService.findUserById(id));
+        return saveNewProduct(product);
+    }
+
+    public List<Product> findAllByContainingPropertyEverywhere(String propertyName, Double priceMin, Double priceMax){
+        return productRepository.
+                findAllByTagsContainsIgnoreCaseOrBodyTitleContainingIgnoreCaseOrTitleContainingIgnoreCaseAndPriceBetweenOrderByPrice
+                        (propertyName, propertyName, propertyName, priceMin, priceMax);
+    }
+
+    public List<Product> findAllByFilter(ProductFilter productFilter){
+        return productRepository.
+        findAllByTagsContainsIgnoreCaseOrBodyTitleContainingIgnoreCaseOrTitleContainingIgnoreCaseAndPriceBetweenOrderByPrice
+                (productFilter.getTitleContains(),
+                        productFilter.getTitleContains(),
+                        productFilter.getTitleContains(),
+                        productFilter.getMixPrice(), productFilter.getMaxPrice());
+    }
 
 }

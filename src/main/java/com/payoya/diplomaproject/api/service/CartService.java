@@ -51,7 +51,7 @@ public class CartService {
         }
 
         if(product.getUser() == null){
-            System.out.println("You buying product created by system it's okey");
+            System.out.println("You buying product created by system it's okay");
         } else if (product.getUser().equals(user)) {
             throw new UserHisSelfAddingToCartProductException("Why do you want to add your items for selling in your cart?");
         }

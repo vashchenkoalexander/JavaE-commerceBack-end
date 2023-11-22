@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
         this method for registry change view controller from first fields name to second fields name
          second name should choose from mappings from your controllers
          */
-        registry.addRedirectViewController("hm", "/");
-        registry.addRedirectViewController("/", "home");
+        registry.addRedirectViewController("hm", "/api/v1/user/all");
+        registry.addRedirectViewController("/", "/api/v1/user/all");
     }
 }

@@ -1,8 +1,6 @@
 package com.payoya.diplomaproject.api.controller;
 
 import com.payoya.diplomaproject.api.entity.Cart;
-import com.payoya.diplomaproject.api.entity.Product;
-import com.payoya.diplomaproject.api.entity.User;
 import com.payoya.diplomaproject.api.service.CartService;
 import org.springframework.web.bind.annotation.*;
 

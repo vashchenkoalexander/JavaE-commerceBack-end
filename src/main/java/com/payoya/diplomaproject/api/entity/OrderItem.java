@@ -1,7 +1,6 @@
 package com.payoya.diplomaproject.api.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

@@ -1,9 +1,9 @@
 package com.payoya.diplomaproject.api.controller;
 
 import com.payoya.diplomaproject.api.entity.Product;
+import com.payoya.diplomaproject.api.entity.ProductFilter;
 import com.payoya.diplomaproject.api.service.ProductService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +28,11 @@ public class ProductRestController {
         return productService.saveNewProduct(product);
     }
 
+    @PostMapping("/new_list")
+    public List<Product> saveNewProductList(@RequestBody @Valid List<Product> products){
+        return productService.saveNewListProducts(products);
+    }
+
     @PostMapping("/new/{id}")
     public Product saveNewProductWithUser(@RequestBody @Valid Product product, @PathVariable Long id){
         return productService.saveNewProductWithUser(id, product);
@@ -39,8 +44,20 @@ public class ProductRestController {
     }
 
     @GetMapping("/all-tags")
-    public List<Product> firdAllByTags(@RequestParam String tags){
+    public List<Product> findAllByTags(@RequestParam String tags){
         return productService.findAllByTags(tags);
+    }
+
+    @GetMapping("/all_by_properties")
+    public List<Product> findAllByContainingPropertyEverywhere(@RequestParam String paramName,
+                                                               @RequestParam Double minPrice,
+                                                               @RequestParam Double maxPrice){
+        return productService.findAllByContainingPropertyEverywhere(paramName, minPrice, maxPrice);
+    }
+
+    @GetMapping("/all_by_filter")
+    public List<Product> findAllByFilter(@RequestBody ProductFilter productFilter){
+        return productService.findAllByFilter(productFilter);
     }
 
 }
