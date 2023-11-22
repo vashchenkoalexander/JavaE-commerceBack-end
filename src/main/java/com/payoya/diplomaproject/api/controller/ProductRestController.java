@@ -27,6 +27,11 @@ public class ProductRestController {
         return productService.saveNewProduct(product);
     }
 
+    @PostMapping("/new_list")
+    public List<Product> saveNewProductList(@RequestBody @Valid List<Product> products){
+        return productService.saveNewListProducts(products);
+    }
+
     @PostMapping("/new/{id}")
     public Product saveNewProductWithUser(@RequestBody @Valid Product product, @PathVariable Long id){
         return productService.saveNewProductWithUser(id, product);
@@ -38,8 +43,13 @@ public class ProductRestController {
     }
 
     @GetMapping("/all-tags")
-    public List<Product> firdAllByTags(@RequestParam String tags){
+    public List<Product> findAllByTags(@RequestParam String tags){
         return productService.findAllByTags(tags);
+    }
+
+    @GetMapping("/all_by_properties")
+    public List<Product> findAllByContainingPropertyEverywhere(@RequestParam String paramName){
+        return productService.findAllByContainingPropertyEverywhere(paramName);
     }
 
 }
