@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
-/*
+/**
 class which listening queue jms.queue.destination from file application.properties for receiving messages
  and processing with them
  */

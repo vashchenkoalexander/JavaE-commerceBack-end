@@ -16,8 +16,8 @@ Class for working with JMS ActiveMQ Artemis for produce message to server Active
 @Profile("prod")
 public class ArtemisProducer {
 
-    private JmsTemplate jmsTemplate;
-    private BaseEntityService baseEntityService;
+    private final JmsTemplate jmsTemplate;
+    private final BaseEntityService baseEntityService;
 
     public ArtemisProducer(JmsTemplate jmsTemplate, BaseEntityService baseEntityService) {
         this.jmsTemplate = jmsTemplate;

@@ -33,9 +33,9 @@ public class Product {
     @Column(name = "stock_quantity")
     private Integer stockQuantity;
 
-    @Column(name = "image")
-    @Nullable
-    private byte[] image;
+    @OneToMany(mappedBy = "product")
+    @JsonManagedReference(value = "imageList-product")
+    private List<Image> imageList;
 
     @Column(name = "tags")
     @NotNull(message = "tags must be present")
@@ -80,12 +80,12 @@ public class Product {
         this.bodyTitle=bodyTitle;
     }
 
-    public byte[] getImage() {
-        return image;
+    public List<Image> getImageList() {
+        return imageList;
     }
 
-    public void setImage(byte[] image){
-        this.image=image;
+    public void setImageList(List<Image> imageList) {
+        this.imageList = imageList;
     }
 
     public void setTags(String tags) {
